@@ -73,7 +73,7 @@ function save() {
   Number.prototype.formateNumber = function (max = 1e5) {
     if (this.valueOf() >= max) {
       formatestring = this.valueOf().toExponential(1).replace("+", "")
-    } else formatestring = this.valueOf()
+    } else formatestring = this.valueOf() >> 0
     return formatestring
   }
 
