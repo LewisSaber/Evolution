@@ -25,7 +25,7 @@
   position: absolute;
   top: 20%;
   left: 20%;
-  border: solid red 1px;
+  border: solid red 0.4vh;
 }
 #upgradesdiv
 {

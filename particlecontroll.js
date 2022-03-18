@@ -54,12 +54,13 @@ function particlemove() {
 
     if (vector[i].xc <= side.l) {
       vector[i].x = Math.abs(vector[i].x);
-
+      vector[i].xc = side.l;
       hit();
     }
     if (vector[i].yc <= side.t) {
       vector[i].y = Math.abs(vector[i].y);
       // vector[i].x += 1
+      vector[i].yc = side.t;
       hit();
     }
     if (vector[i].xc >= side.r) {
