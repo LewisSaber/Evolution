@@ -8,8 +8,9 @@ let vector = [];
 let windowy = window.innerHeight;
 let windowx = window.innerWidth;
 let ballsize;
-let particlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10;
+let basicparticlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10;
 let particleperhit = 1;
+
 
 function resetupgrades() {
   for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
@@ -72,7 +73,9 @@ Number.prototype.formateNumber = function (max = 1e5) {
   } else formatestring = this.valueOf() >> 0;
   return formatestring;
 };
-
+function get_pSpeed(){
+  return basicparticlespeed * (game.upgrades[1]+1)
+}
 function tick() {
   if (game.tickinterval != oldtick) {
     clearInterval(ticktimer);

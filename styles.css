@@ -4,7 +4,7 @@
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
-  width: 30%;
+  width: 50%;
 }
 #counter > * {
   display: inline;
@@ -32,7 +32,6 @@
     display: block;
     float: left;
     width: 15%;
-    border: solid red 2px;
     height: 10%;
     margin: 1vh;
     

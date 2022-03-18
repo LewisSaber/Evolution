@@ -15,8 +15,8 @@ function drawparticles() {
 
     e.body.appendChild(tag);
     vector.push(new Object());
-    vector[i]["x"] = 10 - Math.floor(Math.random() * 21);
-    vector[i]["y"] = 10 - Math.floor(Math.random() * 21);
+    vector[i]["x"] = 5 - Math.floor(Math.random() * 11);
+    vector[i]["y"] = 5 - Math.floor(Math.random() * 11);
     if (Math.abs(vector[i].x) < 1) vector[i].x = 1;
     if (Math.abs(vector[i].y) < 1) vector[i].y = 1;
     particlesdrawn[i] = tag;
@@ -37,8 +37,8 @@ ballsize = Number(ballsize.substring(0, ballsize.length - 2));
 side.r -= ballsize;
 side.b -= ballsize * 3;
 
-function hit() {
-  game.particles += particleperhit;
+function hit(n = 1) {
+  game.particles +=  n * (game.upgrades[2]+1);
   e.countervalue.innerText = game.particles.formateNumber();
 }
 
@@ -49,8 +49,8 @@ function addparticle(n) {
 
 function particlemove() {
   for (let i = 0; i < game.activeparticles; i++) {
-    vector[i].xc += vector[i].x * particlespeed * vector[i].speed;
-    vector[i].yc += vector[i].y * particlespeed * vector[i].speed;
+    vector[i].xc += vector[i].x * get_pSpeed() * vector[i].speed;
+    vector[i].yc += vector[i].y * get_pSpeed() * vector[i].speed;
 
     if (vector[i].xc <= side.l) {
       vector[i].x = Math.abs(vector[i].x);
