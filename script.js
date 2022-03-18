@@ -7,11 +7,8 @@ let ticktimer
 let nparticlesdrawn = 30
 let particlesdrawn = {}
 let vector = [];
-let position = 
-{
-    top : 0,
-    left : 0
-}
+let windowy = window.screen.availHeight
+let windowx = window.screen.availWidth
 function reset()
 {
      game = {
@@ -112,9 +109,18 @@ e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).format
   {
 for(let i = 0 ;i < nparticlesdrawn; i++)
 {
+if(vector[i].xc <= 0)
+vector[i]["x"] = Math.floor(Math.random()* 10)
+if(vector[i].yc <= 0)
+vector[i]["y"] = Math.floor(Math.random()* 10)
+if(vector[i].xc >= windowx )
+vector[i]["x"] = - 1 * Math.floor(Math.random()* 10)
+if(vector[i].yc >= windowy )
+vector[i]["y"] = - 1 * Math.floor(Math.random()* 10)
 
     vector[i].xc += vector[i]["x"]
     vector[i].yc += vector[i]["y"]
+    
     particlesdrawn[i].style.left = vector[i].xc + "px";
     particlesdrawn[i].style.top = vector[i].yc + "px";
 
