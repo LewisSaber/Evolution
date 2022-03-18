@@ -11,9 +11,9 @@ for ( let i = 0, n = allElements.length; i < n; i++)
 {
 e[allIds[i]] = allElements[i];
 }
-let upgrades = 3;
-let upgradedescription = ["Add Particle ","Increase Particle Speed","Increase Gain Per Hit"]
-let costnames = [" Particles"," Particles"," Particles"]
+let upgrades = 4;
+let upgradedescription = ["Add Particle ","Increase Particle Speed","Increase Gain Per Hit","Multiply Gain By Hit"]
+let costnames = [" Particles"," Particles"," Particles"," Particles"]
 let callupgrades = {}
 
 for(let i = 0; i < upgrades; i++)

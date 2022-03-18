@@ -22,7 +22,8 @@ switch (r) {
         return  9 * Math.pow(game.upgrades[1] + 1,1 + game.upgrades[1]/30)
     case 2:
         return   20 * Math.pow(game.upgrades[2] + 1,1 + game.upgrades[2]/90);
-
+    case 3:
+        return 10000 * Math.pow(10,game.upgrades[3])
     default:
 
         break;
@@ -67,6 +68,16 @@ callupgrades = {
     }
    cost = getCost(2)
     e.cost2.innerText = cost.formateNumber() + costnames[2];
+  },
+  buyupgrade3: function () {
+    cost = getCost(3)
+    if (game.particles >= cost && loading == 1) {
+      game.upgrades[3] += 1;
+      game.particles -= cost;
+    
+    }
+   cost = getCost(3)
+    e.cost3.innerText = cost.formateNumber() + costnames[3];
   },
 };
 loadUpgrades();
