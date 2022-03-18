@@ -1,10 +1,10 @@
 #counter {
-  display: inline;
-  float: left;
-  font-size: 2rem;
+
+  font-size: 4vh;
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
+  width: 30%;
 }
 #counter > * {
   display: inline;
@@ -26,4 +26,23 @@
   top: 20%;
   left: 20%;
   border: solid red 1px;
+}
+#upgradesdiv
+{
+    display: block;
+    float: left;
+    width: 15%;
+    border: solid red 2px;
+    height: 10%;
+    margin: 1vh;
+    
+}
+.upgrade
+{
+    display: block;
+    width: 100%; 
+    margin-top: 1%;
+    font-size: 2vh;
+    padding: 2%;
+    border-radius: 20px;
 }

@@ -10,7 +10,7 @@ let windowx = window.innerWidth;
 let ballsize;
 let particlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10;
 let particleperhit = 1;
-let upgrades = 2;
+
 function resetupgrades() {
   for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
 }
