@@ -87,11 +87,9 @@ function buyupgrade(r) {
     game[costnames[r]] -= cost;
   }
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r);
-  if (get_pSpeed() > 5) {
-    e.upgrade1.style.display = "none";
+  if (game.upgrades[r] > upgradelimits[r]) {
+    e["upgrade"+r].style.display = "none";
   }
-  if (game.activeparticles > 50) {
-    e.upgrade0.style.display = "none";
-  }
+  
 }
 loadUpgrades();

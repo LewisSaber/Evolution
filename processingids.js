@@ -16,7 +16,7 @@ for(let i = 0;i < upgrades; i++)
 upgradelimits[i] = 1000000
 }
 upgradelimits[0] = 50
-upgradelimits[0] = 50
+upgradelimits[1] = 50
 
 
 
