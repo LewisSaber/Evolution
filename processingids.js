@@ -10,6 +10,18 @@ let upgrades = 4;
 let upgradedescription = ["Add Particle ","Increase Particle Speed","Increase Gain Per Hit","Multiply Gain By Hit"]
 let costnames = ["particles","particles","particles","particles"]
 let callupgrades = {}
+let upgradelimits = []
+for(let i = 0;i < upgrades; i++)
+{
+upgradelimits[i] = 1000000
+}
+upgradelimits[0] = 50
+upgradelimits[0] = 50
+
+
+
+
+
 function getCostName(n)
 {
   return " " + costnames[n].charAt(0).toUpperCase() + costnames[n].slice(1) 

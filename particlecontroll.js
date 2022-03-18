@@ -38,7 +38,7 @@ side.r -= ballsize;
 side.b -= ballsize * 3;
 
 function hit(n = 1) {
-  game.particles +=  n * (game.upgrades[2]+1) * Math.pow(2,game.upgrades[3]+1);
+  game.particles +=  n * (game.upgrades[2]+1) * Math.pow(2,game.upgrades[3]);
   e.countervalue.innerText = game.particles.formateNumber();
 }
 
