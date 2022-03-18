@@ -4,11 +4,21 @@ let game = {}
 let particlesps
 let oldtick
 let ticktimer
-let nparticlesdrawn = 150
+let nparticlesdrawn = 100
 let particlesdrawn = {}
 let vector = [];
-let windowy = window.screen.availHeight -10
-let windowx = window.screen.availWidth -10
+let windowy = window.screen.availHeight 
+let windowx = window.screen.availWidth 
+let ballsize
+side = {}
+side["l"] = getComputedStyle(e.particlecontainer).left
+side["l"] = Number(side["l"].substring(0,side["l"].length -2))
+side["t"] = getComputedStyle(e.particlecontainer).top
+side["t"] = Number(side["t"].substring(0,side["t"].length -2))
+side["r"] = getComputedStyle(e.particlecontainer).width
+side["r"] = Number(side["r"].substring(0,side["r"].length -2)) + side.l
+side["b"] = getComputedStyle(e.particlecontainer).height
+side["b"] = Number(side["b"].substring(0,side["b"].length -2)) + side.t
 function reset()
 {
      game = {
@@ -98,6 +108,11 @@ e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).format
      vector[i]["yc"] = Number(vector[i]["yc"].substring(0,vector[i]["yc"].length-2))
      vector[i]["xc"] = Number(vector[i]["xc"].substring(0,vector[i]["xc"].length-2))
       }
+ballsize = getComputedStyle(particlesdrawn[i]).width
+ballsize = Number(ballsize.substring(0,ballsize.length-2))
+side.r -= ballsize
+side.b -= ballsize * 3
+
   }
   drawparticles()
   function particlerandom(p )
@@ -112,28 +127,26 @@ for(let i = 0 ;i < nparticlesdrawn; i++)
 
     vector[i].xc += vector[i].x
     vector[i].yc += vector[i].y
-    if(vector[i].xc <= 0)
+    if(vector[i].xc <= side.l)
 {
 vector[i].x= Math.floor(Math.random()* 10)
 vector[i].y += 1
-vector[i].xc += vector[i].x
-    vector[i].yc += vector[i].y
 }
-    if(vector[i].yc <= 0)
+    if(vector[i].yc <= side.t)
 {vector[i].y= Math.floor(Math.random()* 10)
     vector[i].x += 1
-    vector[i].xc += vector[i].x
-    vector[i].yc += vector[i].y
+
 }
-if(vector[i].xc >= windowx )
-{vector[i].x= - 1 * Math.floor(Math.random()* 10)
-    vector[i].xc += vector[i].x
-    vector[i].yc += vector[i].y
+if(vector[i].xc >= side.r )
+{
+    vector[i].x= - 1 * Math.floor(Math.random()* 10)
+    vector[i].xc= side.r
 }
-if(vector[i].yc >= windowy )
-{vector[i].y= - 1 * Math.floor(Math.random()* 10)
-    vector[i].xc += vector[i].x
-    vector[i].yc += vector[i]["y"]
+if(vector[i].yc >= side.b )
+{
+    vector[i].y= - 1 * Math.floor(Math.random()* 10)
+    vector[i].yc = side.b  
+    console.log(vector[i].yc + " " + side.b ) 
 }
     
     particlesdrawn[i].style.left = vector[i].xc + "px";
