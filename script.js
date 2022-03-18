@@ -4,12 +4,14 @@ let game = {}
 let particlesps
 let oldtick
 let ticktimer
-let nparticlesdrawn = 100
+
 let particlesdrawn = {}
 let vector = [];
-let windowy = window.screen.availHeight 
-let windowx = window.screen.availWidth 
+let windowy = window.innerHeight
+let windowx = window.innerWidth
 let ballsize
+let particlespeed = Math.floor(windowx/1920  * 2) + 1
+let particleperhit = 1
 side = {}
 side["l"] = getComputedStyle(e.particlecontainer).left
 side["l"] = Number(side["l"].substring(0,side["l"].length -2))
@@ -24,7 +26,7 @@ function reset()
      game = {
 particles: 0,
 tickinterval: 1000,
-
+activeparticles: 1,
     }
 }
 reset();
@@ -71,7 +73,7 @@ function save() {
   Number.prototype.formateNumber = function (max = 1e5) {
     if (this.valueOf() >= max) {
       formatestring = this.valueOf().toExponential(1).replace("+", "")
-    } else formatestring = this.valueOf().toFixed(1)
+    } else formatestring = this.valueOf()
     return formatestring
   }
 
@@ -84,7 +86,7 @@ function save() {
         oldtick = game.tickinterval
       }
       
-particlesps = 0.1
+particlesps = 0
       game.particles += particlesps
 e.countervalue.innerText = game.particles.formateNumber();
 e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).formateNumber();
@@ -93,59 +95,70 @@ e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).format
 
   function drawparticles()
   {
-      for (let i = 0; i < nparticlesdrawn; i++)
+      for (let i = 0; i < game.activeparticles; i++)
       {
         tag = document.createElement("p")
      tag.setAttribute("class","particle")
     
      e.body.appendChild(tag)
      vector.push(new Object())
-     vector[i]["x"] = 10 - Math.floor(Math.random()* 21);
-     vector[i]["y"] = 10 - Math.floor(Math.random()* 21);
+     vector[i]["x"] = 1 - Math.floor(Math.random()* 3);
+     vector[i]["y"] = 1 - Math.floor(Math.random()* 3) ;
+     if (Math.abs(vector[i].x) < 1)
+     vector[i].x = 1
+     if (Math.abs(vector[i].y) < 1)
+     vector[i].y = 1
      particlesdrawn[i] = tag
      vector[i]["xc"] = getComputedStyle(particlesdrawn[i]).left
      vector[i]["yc"] = getComputedStyle(particlesdrawn[i]).top
      vector[i]["yc"] = Number(vector[i]["yc"].substring(0,vector[i]["yc"].length-2))
      vector[i]["xc"] = Number(vector[i]["xc"].substring(0,vector[i]["xc"].length-2))
       }
-ballsize = getComputedStyle(particlesdrawn[i]).width
+ballsize = getComputedStyle(particlesdrawn[0]).width
 ballsize = Number(ballsize.substring(0,ballsize.length-2))
 side.r -= ballsize
 side.b -= ballsize * 3
 
   }
   drawparticles()
-  function particlerandom(p )
-  {
-   let r = 1 - Math.floor(Math.random()* 3);
-   return r;
-  }
+function hit()
+{
+game.particles += particleperhit
+e.countervalue.innerText = game.particles.formateNumber()
+
+}
   function particlemove()
   {
-for(let i = 0 ;i < nparticlesdrawn; i++)
+for(let i = 0 ;i < game.activeparticles; i++)
 {
 
-    vector[i].xc += vector[i].x
-    vector[i].yc += vector[i].y
+    vector[i].xc += (vector[i].x*particlespeed)
+    vector[i].yc += (vector[i].y*particlespeed)
+
     if(vector[i].xc <= side.l)
 {
-vector[i].x= Math.floor(Math.random()* 10)
-vector[i].y += 1
+vector[i].x= Math.abs(vector[i].x)//
+//vector[i].y += 1
+hit()
+
 }
     if(vector[i].yc <= side.t)
-{vector[i].y= Math.floor(Math.random()* 10)
-    vector[i].x += 1
-
+{vector[i].y= Math.abs(vector[i].y)
+   // vector[i].x += 1
+hit()
 }
 if(vector[i].xc >= side.r )
 {
-    vector[i].x= - 1 * Math.floor(Math.random()* 10)
+    vector[i].x= -1 * Math.abs(vector[i].x)////Math.floor(Math.random()*particlespeed )
     vector[i].xc= side.r
+    hit()
 }
 if(vector[i].yc >= side.b )
 {
-    vector[i].y= - 1 * Math.floor(Math.random()* 10)
+    vector[i].y= -1 * Math.abs(vector[i].y)// Math.floor(Math.random()* particlespeed)
     vector[i].yc = side.b  
+    hit()
+
 }
     
     particlesdrawn[i].style.left = vector[i].xc + "px";
