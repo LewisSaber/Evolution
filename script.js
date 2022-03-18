@@ -4,11 +4,11 @@ let game = {}
 let particlesps
 let oldtick
 let ticktimer
-let nparticlesdrawn = 30
+let nparticlesdrawn = 150
 let particlesdrawn = {}
 let vector = [];
-let windowy = window.screen.availHeight
-let windowx = window.screen.availWidth
+let windowy = window.screen.availHeight -10
+let windowx = window.screen.availWidth -10
 function reset()
 {
      game = {
@@ -109,17 +109,32 @@ e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).format
   {
 for(let i = 0 ;i < nparticlesdrawn; i++)
 {
-if(vector[i].xc <= 0)
-vector[i]["x"] = Math.floor(Math.random()* 10)
-if(vector[i].yc <= 0)
-vector[i]["y"] = Math.floor(Math.random()* 10)
-if(vector[i].xc >= windowx )
-vector[i]["x"] = - 1 * Math.floor(Math.random()* 10)
-if(vector[i].yc >= windowy )
-vector[i]["y"] = - 1 * Math.floor(Math.random()* 10)
 
-    vector[i].xc += vector[i]["x"]
+    vector[i].xc += vector[i].x
+    vector[i].yc += vector[i].y
+    if(vector[i].xc <= 0)
+{
+vector[i].x= Math.floor(Math.random()* 10)
+vector[i].y += 1
+vector[i].xc += vector[i].x
+    vector[i].yc += vector[i].y
+}
+    if(vector[i].yc <= 0)
+{vector[i].y= Math.floor(Math.random()* 10)
+    vector[i].x += 1
+    vector[i].xc += vector[i].x
+    vector[i].yc += vector[i].y
+}
+if(vector[i].xc >= windowx )
+{vector[i].x= - 1 * Math.floor(Math.random()* 10)
+    vector[i].xc += vector[i].x
+    vector[i].yc += vector[i].y
+}
+if(vector[i].yc >= windowy )
+{vector[i].y= - 1 * Math.floor(Math.random()* 10)
+    vector[i].xc += vector[i].x
     vector[i].yc += vector[i]["y"]
+}
     
     particlesdrawn[i].style.left = vector[i].xc + "px";
     particlesdrawn[i].style.top = vector[i].yc + "px";
