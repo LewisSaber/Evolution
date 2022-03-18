@@ -146,7 +146,6 @@ if(vector[i].yc >= side.b )
 {
     vector[i].y= - 1 * Math.floor(Math.random()* 10)
     vector[i].yc = side.b  
-    console.log(vector[i].yc + " " + side.b ) 
 }
     
     particlesdrawn[i].style.left = vector[i].xc + "px";
