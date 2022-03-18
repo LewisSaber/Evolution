@@ -6,6 +6,7 @@ function reset()
 {
      game = {
 particles: 0,
+tickinterval: 1000,
 
     }
 }
@@ -51,3 +52,9 @@ function save() {
   
   }
 
+  function tick()
+  {
+
+
+  }
+   setInterval(save, game.tickinterval)
