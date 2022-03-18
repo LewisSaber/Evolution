@@ -4,8 +4,8 @@ function loadUpgrades() {
     //callupgrades["buyupgrade" + i]();
     buyupgrade(i);
   }
-  if (game.upgrades[r] > upgradelimits[r]) {
-    e["upgrade"+r].style.display = "none";
+  if (game.upgrades[i] > upgradelimits[i]) {
+    e["upgrade"+i].style.display = "none";
   }
   loading = 1;
 }

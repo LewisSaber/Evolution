@@ -24,6 +24,7 @@ function reset() {
     tickinterval: 1000,
     activeparticles: 1,
     upgrades: [],
+    power: 0,
   };
   resetupgrades;
 }
