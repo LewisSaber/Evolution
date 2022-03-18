@@ -4,11 +4,8 @@ function loadUpgrades() {
     //callupgrades["buyupgrade" + i]();
     buyupgrade(i);
   }
-  if (game.activeparticles > 50) {
-    e.upgrade0.style.display = "none";
-  }
-  if (get_pSpeed() > 5) {
-    e.upgrade1.style.display = "none";
+  if (game.upgrades[r] > upgradelimits[r]) {
+    e["upgrade"+r].style.display = "none";
   }
   loading = 1;
 }
