@@ -24,7 +24,7 @@ function reset() {
     tickinterval: 1000,
     activeparticles: 1,
     upgrades: [],
-    power: 0,
+    power: 1,
   };
   resetupgrades;
 }
@@ -87,7 +87,6 @@ function tick() {
   particlesps = 0;
   game.particles += particlesps;
   e.countervalue.innerText = game.particles.formateNumber();
-  e.countergain.innerText =
-    "+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
+  //e.countergain.innerText ="+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
 }
 ticktimer = setInterval(tick, game.tickinterval);

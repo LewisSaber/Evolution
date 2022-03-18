@@ -4,7 +4,9 @@
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
-  width: 50%;
+  display: block;
+  float: left;
+  width: 30%;
 }
 #counter > * {
   display: inline;
@@ -45,3 +47,18 @@
     padding: 2%;
     border-radius: 20px;
 }
+#powerdiv
+{
+    display: block;
+    float: right;
+    font-size: 4vh;
+    border-radius: 20px;
+    border: solid black 1px;
+    padding: 1vh;
+    width: 30%;
+    margin-left: 30%;
+}
+#powerdiv > * {
+    display: inline;
+  }
+

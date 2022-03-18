@@ -38,8 +38,10 @@ side.r -= ballsize;
 side.b -= ballsize * 3;
 
 function hit(n = 1) {
-  game.particles +=  n * (game.upgrades[2]+1) * Math.pow(2,game.upgrades[3]);
+game.power += Math.pow(n * game.upgrades[4],Math.pow(2,game.upgrades[5])) 
+  game.particles +=  n * (game.upgrades[2]+1)*(1 + Math.pow(1.01,game.upgrades[2] )) * Math.pow(2,game.upgrades[3]) * (1 + Math.log10(game.power)/Math.log10(1.2));
   e.countervalue.innerText = game.particles.formateNumber();
+  e.powervalue.innerText = game.power.formateNumber();
 }
 
 function addparticle(n) {
