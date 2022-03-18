@@ -1,7 +1,17 @@
 
 
 let game = {}
-
+let particlesps
+let oldtick
+let ticktimer
+let nparticlesdrawn = 30
+let particlesdrawn = {}
+let vector = [];
+let position = 
+{
+    top : 0,
+    left : 0
+}
 function reset()
 {
      game = {
@@ -15,14 +25,14 @@ reset();
 function save() {
     localStorage.setItem("theEvolutionSave", JSON.stringify(game))
   }
-  setInterval(save, 5000)
+  setInterval(save, 1000)
   function load() {
     reset()
     let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"))
     if (loadgame != null) {
       loadGame(loadgame)
     }
-    //Keys,generators,upgrades,crates,crafts,upgrade2,upgrade3
+   
   }
   load()
   
@@ -51,10 +61,66 @@ function save() {
     }
   
   }
+  Number.prototype.formateNumber = function (max = 1e5) {
+    if (this.valueOf() >= max) {
+      formatestring = this.valueOf().toExponential(1).replace("+", "")
+    } else formatestring = this.valueOf().toFixed(1)
+    return formatestring
+  }
 
   function tick()
   {
+      if(game.tickinterval != oldtick)
+      {
+        clearInterval(ticktimer)
+        ticktimer =  setInterval(tick, game.tickinterval)
+        oldtick = game.tickinterval
+      }
+      
+particlesps = 0.1
+      game.particles += particlesps
+e.countervalue.innerText = game.particles.formateNumber();
+e.countergain.innerText = "+ " +( particlesps * (1000/game.tickinterval)).formateNumber();
+  }
+  ticktimer =  setInterval(tick, game.tickinterval)
 
+  function drawparticles()
+  {
+      for (let i = 0; i < nparticlesdrawn; i++)
+      {
+        tag = document.createElement("p")
+     tag.setAttribute("class","particle")
+    
+     e.body.appendChild(tag)
+     vector.push(new Object())
+     vector[i]["x"] = 10 - Math.floor(Math.random()* 21);
+     vector[i]["y"] = 10 - Math.floor(Math.random()* 21);
+     particlesdrawn[i] = tag
+     vector[i]["xc"] = getComputedStyle(particlesdrawn[i]).left
+     vector[i]["yc"] = getComputedStyle(particlesdrawn[i]).top
+     vector[i]["yc"] = Number(vector[i]["yc"].substring(0,vector[i]["yc"].length-2))
+     vector[i]["xc"] = Number(vector[i]["xc"].substring(0,vector[i]["xc"].length-2))
+      }
+  }
+  drawparticles()
+  function particlerandom(p )
+  {
+   let r = 1 - Math.floor(Math.random()* 3);
+   return r;
+  }
+  function particlemove()
+  {
+for(let i = 0 ;i < nparticlesdrawn; i++)
+{
+
+    vector[i].xc += vector[i]["x"]
+    vector[i].yc += vector[i]["y"]
+    particlesdrawn[i].style.left = vector[i].xc + "px";
+    particlesdrawn[i].style.top = vector[i].yc + "px";
+
+
+}
 
   }
-   setInterval(save, game.tickinterval)
+  particlemove()
+  setInterval(particlemove,10)

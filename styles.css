@@ -1,0 +1,25 @@
+#counter 
+{
+display: inline;
+float: left;
+font-size: 2rem;
+border-radius: 20px;
+border: solid black 1px;
+padding: 1vh;
+}
+#counter  > *
+{
+display: inline;
+}
+.particle
+{
+width: 1vh;
+height: 1vh;
+border: solid black 1px;
+position: absolute;
+border-radius: 60px;
+background-color: blue;
+top: 50%;
+left: 50%;
+
+}
