@@ -1,12 +1,12 @@
 #counter {
 
-  font-size: 4vw;
+  font-size: 3vw;
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
   display: block;
   float: left;
-  width: 40vw;
+  width: 40%;
  
 }
 #counter > * {
@@ -52,12 +52,12 @@
 {
     display: block;
     float: right;
-    font-size: 4vh;
+    font-size: 3vw;
     border-radius: 20px;
     border: solid black 1px;
     padding: 1vh;
-    width: 40vw;
-    margin-left: 20vw;
+    width: 40%;
+    margin-left: 10%;
 }
 #powerdiv > * {
     display: inline;
