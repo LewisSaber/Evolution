@@ -13,12 +13,13 @@ let particleperhit = 1;
 
 BigInt.prototype.toJSON = function() { return this.toString() }
 
+
 function resetupgrades() {
   for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
 }
 function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0;
-  for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = BigInt(0);
+  for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = "0";
 
 
 }
@@ -75,8 +76,12 @@ function loadGame(loadgame) {
     }
     
   }
+ 
 }
-
+for(let i = 0; i <game.eparticles.length;i++)
+  {
+   game.eparticles[i] = BigInt(game.eparticles[i])
+  } 
 setInterval(save, 1000);
 
 addarrays();

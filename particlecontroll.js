@@ -8,6 +8,10 @@ side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
 side["b"] = getComputedStyle(e.particlecontainer).height;
 side["b"] = Number(side["b"].substring(0, side["b"].length - 2))// + side.t;
 
+let colors = ["#fcba03","#9c052a","#2746e3","#05e858","#000000","FFFFFF","#a314b3","#f7a711","#d13838","#04dade"]
+
+
+
 function drawparticles() {
   for (let i = particlesdrawn.length; i < game.activeparticles; i++) {
     tag = document.createElement("p");
@@ -21,6 +25,7 @@ function drawparticles() {
     if (Math.abs(vector[i].y) < 1) vector[i].y = 1;
     particlesdrawn[i] = tag;
     vector[i]["speed"] = (Math.random() * 10 + 1) / 5;
+    particlesdrawn[i].style.backgroundColor = colors[Math.floor(Math.random() * colors.length )]
     vector[i]["xc"] = getComputedStyle(particlesdrawn[i]).left;
     vector[i]["yc"] = getComputedStyle(particlesdrawn[i]).top;
     vector[i]["yc"] = Number(
@@ -35,7 +40,7 @@ drawparticles();
 ballsize = getComputedStyle(particlesdrawn[0]).width;
 ballsize = Number(ballsize.substring(0, ballsize.length - 2));
 side.r -= ballsize;
-side.b -= ballsize * 3;
+side.b -= ballsize * (windowx/windowy)
 
 function hit(n = "1") {
   n = BigInt(n);
