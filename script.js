@@ -16,8 +16,11 @@ BigInt.prototype.toJSON = function() { return this.toString() }
 function resetupgrades() {
   for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
 }
-function addupgrades() {
+function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0;
+  for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = BigInt(0);
+
+
 }
 function reset() {
   game = {
@@ -26,6 +29,9 @@ function reset() {
     activeparticles: 1,
     upgrades: [],
     power: BigInt(0),
+    eparticles: [],
+    fancymode: 1,
+
   };
   resetupgrades();
   
@@ -73,7 +79,7 @@ function loadGame(loadgame) {
 
 setInterval(save, 1000);
 
-addupgrades();
+addarrays();
 
 BigInt.prototype.formateNumber = function (max = 5) {
   formatestring = this.toString()
@@ -104,3 +110,5 @@ function tick() {
   //e.countergain.innerText ="+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
 }
 ticktimer = setInterval(tick, game.tickinterval);
+function reveal()
+{}

@@ -4,16 +4,16 @@ side["l"] = Number(side["l"].substring(0, side["l"].length - 2));
 side["t"] = getComputedStyle(e.particlecontainer).top;
 side["t"] = Number(side["t"].substring(0, side["t"].length - 2));
 side["r"] = getComputedStyle(e.particlecontainer).width;
-side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) + side.l;
+side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
 side["b"] = getComputedStyle(e.particlecontainer).height;
-side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) + side.t;
+side["b"] = Number(side["b"].substring(0, side["b"].length - 2))// + side.t;
 
 function drawparticles() {
   for (let i = particlesdrawn.length; i < game.activeparticles; i++) {
     tag = document.createElement("p");
     tag.setAttribute("class", "particle");
 
-    e.body.appendChild(tag);
+    e.particlecontainer.appendChild(tag);
     vector.push(new Object());
     vector[i]["x"] = 5 - Math.floor(Math.random() * 11);
     vector[i]["y"] = 5 - Math.floor(Math.random() * 11);
@@ -75,18 +75,18 @@ function addparticle(n) {
 
 function particlemove() {
   for (let i = 0; i < game.activeparticles; i++) {
-    vector[i].xc += vector[i].x * get_pSpeed() * vector[i].speed;
-    vector[i].yc += vector[i].y * get_pSpeed() * vector[i].speed;
+    vector[i].xc += vector[i].x * get_pSpeed() * vector[i].speed / game.fancymode;
+    vector[i].yc += vector[i].y * get_pSpeed() * vector[i].speed / game.fancymode;
 
-    if (vector[i].xc <= side.l) {
+    if (vector[i].xc <= 0) {
       vector[i].x = Math.abs(vector[i].x);
-      vector[i].xc = side.l;
+      vector[i].xc = 0;
       hit();
     }
-    if (vector[i].yc <= side.t) {
+    if (vector[i].yc <= 0) {
       vector[i].y = Math.abs(vector[i].y);
       // vector[i].x += 1
-      vector[i].yc = side.t;
+      vector[i].yc = 0;
       hit();
     }
     if (vector[i].xc >= side.r) {
@@ -105,4 +105,4 @@ function particlemove() {
   }
 }
 particlemove();
-setInterval(particlemove, 10);
+setInterval(particlemove, 10 / game.fancymode);

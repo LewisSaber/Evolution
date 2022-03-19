@@ -27,6 +27,7 @@ upgradelimits[7] = 1
 
 
 
+
 function getCostName(n)
 {
   return " " + costnames[n].charAt(0).toUpperCase() + costnames[n].slice(1) 
