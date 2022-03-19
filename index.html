@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Evolution</title>
-</head>
-<body id="body" >
- <div id="counter">Primorial particles: <p id="countervalue">0</p></div>
- <div id="powerdiv">Power : <p id="powervalue">0</p> / 1e150</div>
- 
- <div id="particlecontainer"></div>
- <div id="upgradesdiv"></div>
-<script src="processingids.js"></script>
-<script src="script.js"></script>
-<script src="upgrade.js"></script>
-<script src="particlecontroll.js"></script>
-</body>
+  </head>
+  <body id="body">
+    <div id="counter">
+      Primorial particles:
+      <p id="countervalue">0</p>
+    </div>
+    <div id="powerdiv">
+      Power :
+      <p id="powervalue">0</p>
+      / 1e150
+    </div>
+    <button id="options" onclick="options()"></button>
+    <div id="particlecontainer"></div>
+    <div id="upgradesdiv"></div>
+    <div id="optionsdiv">
+      <button id="hardreset" onclick="HardReset()">HARD RESET</button
+      ><button id="fancymode" onclick="fancymode()">
+        Smooth Particles:<br>
+        ON
+      </button>
+    </div>
+
+    <script src="processingids.js"></script>
+    <script src="script.js"></script>
+    <script src="upgrade.js"></script>
+    <script src="particlecontroll.js"></script>
+    <script src="options.js"></script>
+  </body>
 </html>

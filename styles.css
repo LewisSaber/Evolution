@@ -28,7 +28,8 @@
   position: absolute;
   top: 20%;
   left: 20%;
-  border: solid red 0.4vh;
+  border: solid red 0.8vh;
+  
 }
 #upgradesdiv
 {
@@ -62,4 +63,32 @@
 #powerdiv > * {
     display: inline;
   }
+#options
+{
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+  background-image: url(img/options.png);
+  background-size: cover;
+  width: 5vh;
+  height: 5vh;
 
+}
+#optionsdiv
+{
+  width: 60%;
+  height: 60%;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  border: solid red 0.8vh;
+  display: none;
+}
+#optionsdiv button
+{
+  font-size: 1.5vw;
+  margin: 1%;
+  display: block;
+  float: left;
+  height: 10vh;
+}

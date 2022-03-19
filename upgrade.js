@@ -1,12 +1,22 @@
 let loading = 0;
-function loadUpgrades() {
+function LOADING() {
+  
+  redraw()
+ 
   for (let i = 0; i < upgrades; i++) {
     //callupgrades["buyupgrade" + i]();
     buyupgrade(i);
+ 
   }
   if (game.upgrades[i] >= upgradelimits[i]) {
     e["upgrade"+i].style.display = "none";
   }
+  if (game.fancymode == 1) {
+    e.fancymode.innerHTML = " Smooth Particles:<br>OFF";
+  } else {
+    e.fancymode.innerHTML = " Smooth Particles:<br>ON";
+  }
+  
   loading = 1;
 }
 function getCost(r) {
@@ -53,4 +63,3 @@ function buyupgrade(r) {
   }
   
 }
-loadUpgrades();
