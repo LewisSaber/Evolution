@@ -4,7 +4,7 @@ function loadUpgrades() {
     //callupgrades["buyupgrade" + i]();
     buyupgrade(i);
   }
-  if (game.upgrades[i] > upgradelimits[i]) {
+  if (game.upgrades[i] >= upgradelimits[i]) {
     e["upgrade"+i].style.display = "none";
   }
   loading = 1;
@@ -23,6 +23,10 @@ function getCost(r) {
       return 100000 * Math.pow(100, game.upgrades[4]);
     case 5:
       return 1000000 * Math.pow(100, game.upgrades[5]);
+    case 6:
+      return 1e14 ;
+      case 7:
+        return 1e16 ;
     default:
       break;
   }
@@ -43,7 +47,7 @@ function buyupgrade(r) {
     game[costnames[r]] -= cost;
   }
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r);
-  if (game.upgrades[r] > upgradelimits[r]) {
+  if (game.upgrades[r] >= upgradelimits[r]) {
     e["upgrade"+r].style.display = "none";
   }
   

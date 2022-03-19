@@ -6,9 +6,10 @@ for ( let i = 0, n = allElements.length; i < n; i++)
 {
 e[allElements[i].id] = allElements[i];
 }
-let upgrades = 6;
-let upgradedescription = ["Add Particle ","Increase Particle Speed","Increase Gain Per Hit","Multiply Gain By Hit","Increase Power Per Hit","Square Power Gain"]
-let costnames = ["particles","particles","particles","particles","particles","particles"]
+
+let upgradedescription = ["Add Particle ","Increase Particle Speed","Increase Gain Per Hit","Multiply Gain By Hit","Increase Power Per Hit","Square Power Gain","Log8(Particles) Multiply Power","Log1000(Power) Multiply Particles"]
+let upgrades = upgradedescription.length
+let costnames = ["particles","particles","particles","particles","particles","particles","particles","particles"]
 let callupgrades = {}
 let upgradelimits = []
 for(let i = 0;i < upgrades; i++)
@@ -17,6 +18,10 @@ upgradelimits[i] = 1000000
 }
 upgradelimits[0] = 50
 upgradelimits[1] = 50
+upgradelimits[5] = 6
+upgradelimits[6] = 1
+upgradelimits[7] = 1
+
 
 
 

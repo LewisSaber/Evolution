@@ -20,7 +20,7 @@ function drawparticles() {
     if (Math.abs(vector[i].x) < 1) vector[i].x = 1;
     if (Math.abs(vector[i].y) < 1) vector[i].y = 1;
     particlesdrawn[i] = tag;
-    vector[i]["speed"] = (Math.random()*10 + 1)/ 5
+    vector[i]["speed"] = (Math.random() * 10 + 1) / 5;
     vector[i]["xc"] = getComputedStyle(particlesdrawn[i]).left;
     vector[i]["yc"] = getComputedStyle(particlesdrawn[i]).top;
     vector[i]["yc"] = Number(
@@ -38,8 +38,16 @@ side.r -= ballsize;
 side.b -= ballsize * 3;
 
 function hit(n = 1) {
-game.power += Math.pow(n * game.upgrades[4],Math.pow(2,game.upgrades[5])) 
-  game.particles +=  n * (game.upgrades[2]+1)*(1 + Math.pow(1.01,game.upgrades[2] )) * Math.pow(2,game.upgrades[3]) * (1 + Math.log10(game.power)/Math.log10(1.2));
+  game.power += Math.pow(
+    n * game.upgrades[4] *( Math.log10(game.particles)/Math.log10(8) * game.upgrades[6]  + 1),
+    Math.pow(2, game.upgrades[5] )  
+  );
+  game.particles +=
+    n *
+    (game.upgrades[2] + 1) *
+    (1 + Math.pow(1.01, game.upgrades[2])) *
+    Math.pow(2, game.upgrades[3]) *
+    (1 + Math.log10(game.power) / Math.log10(1.2)) * (Math.log10(game.power)/Math.log10(1000)* game.upgrades[7] + 1)
   e.countervalue.innerText = game.particles.formateNumber();
   e.powervalue.innerText = game.power.formateNumber();
 }
