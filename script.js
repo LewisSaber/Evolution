@@ -2,7 +2,7 @@ let game = {};
 let particlesps;
 let oldtick;
 let ticktimer;
-
+let eparticles = [];
 let particlesdrawn = [];
 let vector = [];
 let windowy = window.innerHeight;
@@ -20,6 +20,7 @@ function resetupgrades() {
 function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0;
   for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = "0";
+  for (let i = eparticles.length; i < 12; i++) eparticles[i] = "0";
 
 
 }
@@ -40,6 +41,7 @@ function reset() {
 reset();
 
 function save() {
+  for (let i = eparticles.length; i < 12; i++) game.eparticles[i] = eparticles[i].toString();
   localStorage.setItem("theEvolutionSave", JSON.stringify(game));
 }
 
@@ -80,7 +82,7 @@ function loadGame(loadgame) {
 }
 for(let i = 0; i <game.eparticles.length;i++)
   {
-   game.eparticles[i] = BigInt(game.eparticles[i])
+   eparticles[i] = BigInt(game.eparticles[i])
   } 
 setInterval(save, 1000);
 
