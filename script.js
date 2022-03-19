@@ -11,6 +11,7 @@ let ballsize;
 let basicparticlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10;
 let particleperhit = 1;
 
+BigInt.prototype.toJSON = function() { return this.toString() }
 
 function resetupgrades() {
   for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
@@ -20,20 +21,21 @@ function addupgrades() {
 }
 function reset() {
   game = {
-    particles: 0,
+    particles: BigInt(0),
     tickinterval: 1000,
     activeparticles: 1,
     upgrades: [],
-    power: 1,
+    power: BigInt(0),
   };
-  resetupgrades;
+  resetupgrades();
+  
 }
 reset();
 
 function save() {
   localStorage.setItem("theEvolutionSave", JSON.stringify(game));
 }
-setInterval(save, 1000);
+
 function load() {
   reset();
   let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"));
@@ -59,15 +61,28 @@ function loadGame(loadgame) {
           }
         }
       } else if (typeof loadgame[Object.keys(loadgame)[i]] == "string") {
-        game[Object.keys(loadgame)[i]] = loadgame[Object.keys(loadgame)[i]];
+        
+        game[Object.keys(loadgame)[i]] = BigInt(loadgame[Object.keys(loadgame)[i]]);
       } else {
         game[Object.keys(game)[i]] = loadgame[Object.keys(loadgame)[i]];
       }
     }
+    console.log(game[Object.keys(loadgame)[i]]);
+    console.log(game[Object.keys(game)[i]])
   }
 }
+console.log(game)
+setInterval(save, 1000);
+
 addupgrades();
 
+BigInt.prototype.formateNumber = function (max = 5) {
+  formatestring = this.toString()
+  if (formatestring.length >= max) {
+    formatestring = formatestring[0] + "." + formatestring[1] + "e" +  (formatestring.length-1);
+  } 
+  return formatestring;
+};
 Number.prototype.formateNumber = function (max = 1e5) {
   if (this.valueOf() >= max) {
     formatestring = this.valueOf().toExponential(1).replace("+", "");
@@ -85,7 +100,7 @@ function tick() {
   }
 
   particlesps = 0;
-  game.particles += particlesps;
+//  game.particles += particlesps;
   e.countervalue.innerText = game.particles.formateNumber();
   //e.countergain.innerText ="+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
 }

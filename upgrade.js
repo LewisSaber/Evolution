@@ -33,7 +33,7 @@ function getCost(r) {
 }
 
 function buyupgrade(r) {
-  cost = getCost(r);
+  cost = BigInt(Math.trunc(getCost(r)));
   if (game[costnames[r]] >= cost && loading == 1) {
     switch (r) {
       case 0:
@@ -44,6 +44,9 @@ function buyupgrade(r) {
         break;
     }
     game.upgrades[r] += 1;
+    console.log("Cost: "+ cost)
+    console.log("Particles: "+game[costnames[r]])
+    console.log("delta: "+ (game[costnames[r]] - cost) )
     game[costnames[r]] -= cost;
   }
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r);

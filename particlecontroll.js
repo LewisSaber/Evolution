@@ -37,17 +37,33 @@ ballsize = Number(ballsize.substring(0, ballsize.length - 2));
 side.r -= ballsize;
 side.b -= ballsize * 3;
 
-function hit(n = 1) {
-  game.power += Math.pow(
-    n * game.upgrades[4] *( Math.log10(game.particles)/Math.log10(8) * game.upgrades[6]  + 1),
-    Math.pow(2, game.upgrades[5] )  
-  );
+function hit(n = "1") {
+  n = BigInt(n);
+  game.power +=
+    (n *
+      BigInt(game.upgrades[4] + 1) *
+      BigInt(
+        Math.trunc(
+          (game.particles.toString().length / Math.log10(8)) *
+            game.upgrades[6] +
+            1
+        )
+      )) **
+    BigInt(Math.pow(2, game.upgrades[5]));
+  pwrl = game.power.toString().length;
+
   game.particles +=
     n *
-    (game.upgrades[2] + 1) *
-    (1 + Math.pow(1.01, game.upgrades[2])) *
-    Math.pow(2, game.upgrades[3]) *
-    (1 + Math.log10(game.power) / Math.log10(1.2)) * (Math.log10(game.power)/Math.log10(1000)* game.upgrades[7] + 1)
+    BigInt(Math.trunc(
+      (game.upgrades[2] + 1) *
+      Math.pow(1.01, game.upgrades[2]) *
+        Math.pow(2, game.upgrades[3])
+    )) *
+    BigInt(
+      Math.trunc(1 + pwrl / Math.log10(1.2)* game.upgrades[1]/100) *
+        ((pwrl / Math.log10(1000)) * game.upgrades[7] + 1)
+    );
+
   e.countervalue.innerText = game.particles.formateNumber();
   e.powervalue.innerText = game.power.formateNumber();
 }
