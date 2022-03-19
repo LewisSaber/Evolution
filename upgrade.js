@@ -44,9 +44,7 @@ function buyupgrade(r) {
         break;
     }
     game.upgrades[r] += 1;
-    console.log("Cost: "+ cost)
-    console.log("Particles: "+game[costnames[r]])
-    console.log("delta: "+ (game[costnames[r]] - cost) )
+    
     game[costnames[r]] -= cost;
   }
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r);

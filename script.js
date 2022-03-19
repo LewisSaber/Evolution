@@ -67,11 +67,10 @@ function loadGame(loadgame) {
         game[Object.keys(game)[i]] = loadgame[Object.keys(loadgame)[i]];
       }
     }
-    console.log(game[Object.keys(loadgame)[i]]);
-    console.log(game[Object.keys(game)[i]])
+    
   }
 }
-console.log(game)
+
 setInterval(save, 1000);
 
 addupgrades();
