@@ -61,5 +61,6 @@ function buyupgrade(r) {
   if (game.upgrades[r] >= upgradelimits[r]) {
     e["upgrade"+r].style.display = "none";
   }
+  else e["upgrade"+r].style.display = "block"
   
 }
