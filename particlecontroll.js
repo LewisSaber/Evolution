@@ -65,8 +65,8 @@ function hit(n = "1") {
         Math.pow(2, game.upgrades[3])
     )) *
     BigInt(
-      Math.trunc(1 + pwrl / Math.log10(1.2)* game.upgrades[1]/100) *
-        ((pwrl / Math.log10(1000)) * game.upgrades[7] + 1)
+      Math.trunc((1 + pwrl / Math.log10(1.2)* game.upgrades[1]/100) *
+        ((pwrl / Math.log10(1000)) * game.upgrades[7] + 1))
     );
 
   e.countervalue.innerText = game.particles.formateNumber();

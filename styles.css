@@ -1,12 +1,13 @@
 #counter {
 
-  font-size: 4vh;
+  font-size: 4vw;
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
   display: block;
   float: left;
-  width: 30%;
+  width: 40vw;
+ 
 }
 #counter > * {
   display: inline;
@@ -55,8 +56,8 @@
     border-radius: 20px;
     border: solid black 1px;
     padding: 1vh;
-    width: 30%;
-    margin-left: 30%;
+    width: 40vw;
+    margin-left: 20vw;
 }
 #powerdiv > * {
     display: inline;
