@@ -1,28 +1,29 @@
-let game = {};
-let particlesps;
-let oldtick;
-let ticktimer;
-let eparticles = [];
-let particlesdrawn = [];
-let vector = [];
-let windowy = window.innerHeight;
-let windowx = window.innerWidth;
-let ballsize;
-let basicparticlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10;
-let particleperhit = 1;
+let game = {}
+let particlesps
+let oldtick
+let ticktimer
+let eparticles = []
+let particlesdrawn = []
+let vector = []
+let windowy = window.innerHeight
+let windowx = window.innerWidth
+let ballsize
+let basicparticlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10
+let particleperhit = 1
+let currenttab = "particles"
+let loading = 0
 
-BigInt.prototype.toJSON = function() { return this.toString() }
-
+BigInt.prototype.toJSON = function () {
+  return this.toString()
+}
 
 function resetupgrades() {
-  for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0;
+  for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0
 }
 function addarrays() {
-  for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0;
-  for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = "0";
-  for (let i = eparticles.length; i < 12; i++) eparticles[i] = "0";
-
-
+  for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0
+  for (let i = game.eparticles.length; i < 12; i++) game.eparticles[i] = "0"
+  for (let i = eparticles.length; i < 12; i++) eparticles[i] = "0"
 }
 function reset() {
   game = {
@@ -33,27 +34,28 @@ function reset() {
     power: BigInt(0),
     eparticles: [],
     fancymode: 1,
-
-  };
-  resetupgrades();
+    elementalparticles: BigInt(0),
+    elementalprestiges: 0,
+  }
+  resetupgrades()
   eparticles = []
-  
 }
-reset();
+reset()
 
 function save() {
-  for (let i = eparticles.length; i < 12; i++) game.eparticles[i] = eparticles[i].toString();
-  localStorage.setItem("theEvolutionSave", JSON.stringify(game));
+  for (let i = eparticles.length; i < 12; i++)
+    game.eparticles[i] = eparticles[i].toString()
+  localStorage.setItem("theEvolutionSave", JSON.stringify(game))
 }
 
 function load() {
-  reset();
-  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"));
+  reset()
+  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"))
   if (loadgame != null) {
-    loadGame(loadgame);
+    loadGame(loadgame)
   }
 }
-load();
+load()
 
 function loadGame(loadgame) {
   //Sets each variable in 'game' to the equivalent variable in 'loadgame' (the saved file)
@@ -63,60 +65,122 @@ function loadGame(loadgame) {
         for (j = 0; j < Object.keys(game.upgrade).length; j++) {
           if (loadgame.upgrade[Object.keys(game.upgrade)[j]] == null) {
             loadgame.upgrade[Object.keys(game.upgrade)[j]] =
-              game.upgrade[Object.keys(game.upgrade)[j]];
+              game.upgrade[Object.keys(game.upgrade)[j]]
           } else {
-            console.log("loading");
+            console.log("loading")
             game.upgrade[Object.keys(game.upgrade)[j]] =
-              loadgame.upgrade[Object.keys(game.upgrade)[j]];
+              loadgame.upgrade[Object.keys(game.upgrade)[j]]
           }
         }
       } else if (typeof loadgame[Object.keys(loadgame)[i]] == "string") {
-        
-        game[Object.keys(loadgame)[i]] = BigInt(loadgame[Object.keys(loadgame)[i]]);
+        game[Object.keys(loadgame)[i]] = BigInt(
+          loadgame[Object.keys(loadgame)[i]]
+        )
       } else {
-        game[Object.keys(game)[i]] = loadgame[Object.keys(loadgame)[i]];
+        game[Object.keys(game)[i]] = loadgame[Object.keys(loadgame)[i]]
       }
     }
-    
   }
- 
 }
-for(let i = 0; i <game.eparticles.length;i++)
-  {
-   eparticles[i] = BigInt(game.eparticles[i])
-  } 
-setInterval(save, 1000);
+for (let i = 0; i < game.eparticles.length; i++) {
+  eparticles[i] = BigInt(game.eparticles[i])
+}
+setInterval(save, 1000)
 
-addarrays();
+addarrays()
 
 BigInt.prototype.formateNumber = function (max = 5) {
   formatestring = this.toString()
   if (formatestring.length >= max) {
-    formatestring = formatestring[0] + "." + formatestring[1] + "e" +  (formatestring.length-1);
-  } 
-  return formatestring;
-};
+    formatestring =
+      formatestring[0] +
+      "." +
+      formatestring[1] +
+      "e" +
+      (formatestring.length - 1)
+  }
+  return formatestring
+}
 Number.prototype.formateNumber = function (max = 1e5) {
   if (this.valueOf() >= max) {
-    formatestring = this.valueOf().toExponential(1).replace("+", "");
-  } else formatestring = this.valueOf() >> 0;
-  return formatestring;
-};
-function get_pSpeed(){
-  return basicparticlespeed * (game.upgrades[1]+1)
+    formatestring = this.valueOf().toExponential(1).replace("+", "")
+  } else formatestring = this.valueOf() >> 0
+  return formatestring
+}
+function get_pSpeed() {
+  return basicparticlespeed * (game.upgrades[1] + 1)
 }
 function tick() {
   if (game.tickinterval != oldtick) {
-    clearInterval(ticktimer);
-    ticktimer = setInterval(tick, game.tickinterval);
-    oldtick = game.tickinterval;
+    clearInterval(ticktimer)
+    ticktimer = setInterval(tick, game.tickinterval)
+    oldtick = game.tickinterval
   }
 
-  particlesps = 0;
-//  game.particles += particlesps;
-  e.countervalue.innerText = game.particles.formateNumber();
+  particlesps = 0
+  //  game.particles += particlesps;
+  updateCounterValue()
+  if (prestigelist[currenttab]) updatePrestigeButton(currenttab)
+
   //e.countergain.innerText ="+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
 }
-ticktimer = setInterval(tick, game.tickinterval);
-function reveal()
-{}
+ticktimer = setInterval(tick, game.tickinterval)
+
+function LOADING() {
+  redraw()
+
+  for (let i = 0; i < upgrades; i++) {
+    //callupgrades["buyupgrade" + i]();
+    buyupgrade(i)
+  }
+  if (game.upgrades[i] >= upgradelimits[i]) {
+    e["upgrade" + i].style.display = "none"
+  }
+  if (game.fancymode == 1) {
+    e.fancymode.innerHTML = " Smooth Particles:<br>OFF"
+  } else {
+    e.fancymode.innerHTML = " Smooth Particles:<br>ON"
+  }
+  reveal()
+  setInterval(reveal, 5000)
+  loading = 1
+}
+
+function reveal() {
+  if (game.power.toString().length > 150 || game.elementalprestiges > 0) {
+    e.buyMax.style.display = "block"
+    e.elementalTabsButton.style.display = "block"
+  }
+}
+
+function buymax(r) {
+  ifbough = true
+  for (let i = 0; i < upgrades; i++) {
+    if (costnames[i] == r) {
+      do {
+        ifbough = buyupgrade(i)
+      } while (ifbough == true)
+    }
+  }
+}
+function openupgrades(r) {
+  for (let i = 0; i < upgrades; i++)
+    if (game.upgrades[i] <= upgradelimits[i]) {
+      if (costnames[i] == r) {
+        e["upgrade" + i].style.display = "block"
+      } else e["upgrade" + i].style.display = "none"
+    }
+}
+function openTab(r, n) {
+  e.countername.innerHTML = counternames[n] + ": "
+  e[currenttab + "div"].style.display = "none"
+  e[r + "div"].style.display = "block"
+  currenttab = r
+  updateCounterValue()
+  openupgrades(r)
+  if (prestigelist[r]) updatePrestigeButton(r)
+}
+function updateCounterValue() {
+  e.countervalue.innerText = game[currenttab].formateNumber()
+}
+

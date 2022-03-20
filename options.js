@@ -1,19 +1,19 @@
 let isoptionson = false;
 function options() {
   if (isoptionson) {
-    particleinterval = setInterval(particlemove,10/game.fancymode)
+    particleinterval = setInterval(particlemove, 10 / game.fancymode);
     e.optionsdiv.style.display = "none";
-    e.particlecontainer.style.display = "block";
+    e.particlesdiv.style.display = "block";
     isoptionson = false;
-    redraw()
+    e.tabsdiv.style.display = "block"
+    redraw();
   } else {
-    clearInterval(particleinterval)
+    clearInterval(particleinterval);
     isoptionson = true;
-    e.particlecontainer.style.display = "none";
+    e.particlesdiv.style.display = "none";
+    e.tabsdiv.style.display = "none"
     e.optionsdiv.style.display = "block";
-    
   }
- 
 }
 function fancymode() {
   if (game.fancymode == 1) {
@@ -23,23 +23,17 @@ function fancymode() {
     game.fancymode = 1;
     e.fancymode.innerHTML = " Smooth Particles:<br>OFF";
   }
-
-
 }
-function HardReset()
-{
-let result = prompt("Are you sure?!?(yes/no)")
+function HardReset() {
+  let result = prompt("Are you sure?!?(yes/no)");
 
-if (result.toLowerCase() == "yes")
-{
-    reset()
-    tick()
-    addarrays() 
+  if (result.toLowerCase() == "yes") {
+    reset();
+    tick();
+    addarrays();
     save()
-    LOADING()
-    
-}
-
-
+    options()
+    LOADING();
+  }
 }
 LOADING();

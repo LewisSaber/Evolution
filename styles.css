@@ -1,5 +1,4 @@
 #counter {
-
   font-size: 3vw;
   border-radius: 20px;
   border: solid black 1px;
@@ -7,7 +6,6 @@
   display: block;
   float: left;
   width: 40%;
- 
 }
 #counter > * {
   display: inline;
@@ -18,53 +16,47 @@
   border: solid black 1px;
   position: absolute;
   border-radius: 60px;
-  
+
   top: 50%;
   left: 50%;
 }
-#particlecontainer {
+#particlesdiv {
   width: 60%;
   height: 60%;
   position: absolute;
   top: 20%;
   left: 20%;
   border: solid red 0.8vh;
-  
 }
-#upgradesdiv
-{
-    display: block;
-    float: left;
-    width: 15%;
-    height: 10%;
-    margin: 1vh;
-    
+#upgradesdiv {
+  display: block;
+  float: left;
+  width: 15%;
+  height: 10%;
+  margin: 1vh;
 }
-.upgrade
-{
-    display: block;
-    width: 100%; 
-    margin-top: 1%;
-    font-size: 2vh;
-    padding: 2%;
-    border-radius: 20px;
+.upgrade {
+  display: block;
+  width: 100%;
+  margin-top: 1%;
+  font-size: 2vh;
+  padding: 2%;
+  border-radius: 20px;
 }
-#powerdiv
-{
-    display: block;
-    float: right;
-    font-size: 3vw;
-    border-radius: 20px;
-    border: solid black 1px;
-    padding: 1vh;
-    width: 40%;
-    margin-left: 10%;
+#powerdiv {
+  display: block;
+  float: right;
+  font-size: 3vw;
+  border-radius: 20px;
+  border: solid black 1px;
+  padding: 1vh;
+  width: 40%;
+  margin-left: 10%;
 }
 #powerdiv > * {
-    display: inline;
-  }
-#options
-{
+  display: inline;
+}
+#options {
   position: absolute;
   bottom: 1%;
   right: 1%;
@@ -72,10 +64,8 @@
   background-size: cover;
   width: 5vh;
   height: 5vh;
-
 }
-#optionsdiv
-{
+#optionsdiv {
   width: 60%;
   height: 60%;
   position: absolute;
@@ -84,11 +74,53 @@
   border: solid red 0.8vh;
   display: none;
 }
-#optionsdiv button
-{
+#optionsdiv button {
   font-size: 1.5vw;
   margin: 1%;
   display: block;
   float: left;
   height: 10vh;
+}
+#tabsdiv {
+  display: block;
+  float: right;
+  width: 15%;
+  height: 10%;
+  margin: 1vh;
+}
+.tabsbutton {
+  display: block;
+  width: 100%;
+  margin-top: 1%;
+  font-size: 2vh;
+  padding: 2%;
+  border-radius: 20px;
+}
+#elementalparticlesdiv {
+  display: none;
+  width: 60%;
+  height: 60%;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  border: outset blue 0.8vh;
+  background-color: bisque;
+}
+.prestigeButton {
+  display: block;
+  width: 40%;
+  margin-top: 1%;
+  margin-left: 1%;
+  font-size: 2vh;
+  padding: 2%;
+  border-radius: 20px;
+}
+#prestigevalue {
+  display: inline;
+}
+#elementalTabsButton {
+  display: none;
+}
+#buyMax {
+  display: none;
 }

@@ -1,66 +1,50 @@
-let loading = 0;
-function LOADING() {
-  
-  redraw()
- 
-  for (let i = 0; i < upgrades; i++) {
-    //callupgrades["buyupgrade" + i]();
-    buyupgrade(i);
- 
-  }
-  if (game.upgrades[i] >= upgradelimits[i]) {
-    e["upgrade"+i].style.display = "none";
-  }
-  if (game.fancymode == 1) {
-    e.fancymode.innerHTML = " Smooth Particles:<br>OFF";
-  } else {
-    e.fancymode.innerHTML = " Smooth Particles:<br>ON";
-  }
-  
-  loading = 1;
-}
 function getCost(r) {
   switch (r) {
     case 0:
-      return 4 * Math.pow(game.upgrades[0] + 1, 1 + game.upgrades[0] / 10);
+      return 4 * Math.pow(game.upgrades[0] + 1, 1 + game.upgrades[0] / 10)
     case 1:
-      return 9 * Math.pow(game.upgrades[1] + 1, 1 + game.upgrades[1] / 30);
+      return 9 * Math.pow(game.upgrades[1] + 1, 1 + game.upgrades[1] / 10)
     case 2:
-      return 20 * Math.pow(game.upgrades[2] + 1, 1 + game.upgrades[2] / 120);
+      return 20 * Math.pow(game.upgrades[2] + 1, 1 + game.upgrades[2] / 120)
     case 3:
-      return 10000 * Math.pow(10, game.upgrades[3]);
+      return 10000 * Math.pow(10, game.upgrades[3])
     case 4:
-      return 100000 * Math.pow(100, game.upgrades[4]);
+      return 100000 * Math.pow(100, game.upgrades[4])
     case 5:
-      return 1000000 * Math.pow(100, game.upgrades[5]);
+      return 1000000 * Math.pow(100, game.upgrades[5])
     case 6:
-      return 1e14 ;
-      case 7:
-        return 1e16 ;
+      return 1e14
+    case 7:
+      return 5e15
     default:
-      break;
+      break
   }
 }
 
 function buyupgrade(r) {
-  cost = BigInt(Math.trunc(getCost(r)));
-  if (game[costnames[r]] >= cost && loading == 1) {
+ let bupgrade = false
+  cost = BigInt(Math.trunc(getCost(r)))
+  if (
+    game[costnames[r]] >= cost &&
+    loading == 1 &&
+    game.upgrades[r] <= upgradelimits[r]
+  ) {
     switch (r) {
       case 0:
-        addparticle(1);
-
-        break;
+        addparticle(1)
+      
+        break
       default:
-        break;
+        break
     }
-    game.upgrades[r] += 1;
-    
-    game[costnames[r]] -= cost;
+    game.upgrades[r] += 1
+
+    game[costnames[r]] -= cost
+    bupgrade = true
   }
-  e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r);
+  e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r)
   if (game.upgrades[r] >= upgradelimits[r]) {
-    e["upgrade"+r].style.display = "none";
-  }
-  else e["upgrade"+r].style.display = "block"
-  
+    e["upgrade" + r].style.display = "none"
+  } else e["upgrade" + r].style.display = "block"
+  return bupgrade
 }
