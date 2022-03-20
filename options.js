@@ -26,7 +26,8 @@ function fancymode() {
 }
 function HardReset() {
   let result = prompt("Are you sure?!?(yes/no)");
-
+if (result != null)
+{
   if (result.toLowerCase() == "yes") {
     reset();
     tick();
@@ -35,5 +36,6 @@ function HardReset() {
     options()
     LOADING();
   }
+}
 }
 LOADING();
