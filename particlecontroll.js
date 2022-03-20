@@ -96,7 +96,7 @@ function hit(n = "1") {
     BigInt(
       Math.trunc(
         (game.upgrades[2] + 1) *
-          Math.pow(1.01, game.upgrades[2]) *
+          Math.pow(1.011, game.upgrades[2]) *
           Math.pow(2, game.upgrades[3])
       )
     ) *
