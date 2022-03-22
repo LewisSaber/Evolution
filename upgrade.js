@@ -24,6 +24,8 @@ function getCost(r) {
       return Decimal(5e7)
     case 11:
       return Decimal(2e8)
+    case 12:
+      return Decimal(1e14)
     case 13:
       return Decimal(10).mul(Decimal(1e3).toPower(game.upgrades[13]*2))
     case 14: 
@@ -36,7 +38,9 @@ function getCost(r) {
       return Decimal(2e7)
     case 18:
       return Decimal("1e500").toPower(game.upgrades[18] + 1)
-
+    case 19:
+        return Decimal(1e64)
+        
     default:
       return Decimal(1e300)
      
@@ -72,7 +76,7 @@ function buyupgrade(r) {
         reveal()
         break;
       case 12:
-
+       upgradelimits[19] = 1
       reveal()
       break
       case 15:

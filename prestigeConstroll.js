@@ -2,7 +2,7 @@ function getPrestigeValue(r) {
     switch (r) {
       case "elementalparticles":
           if(game.power.e > 145)
-        return Decimal(2+game.elementalprestiges/10000).add(getElementalParticleEffect(10)).toPower((game.power.log(10).minus(145).div(10).div(game.power.log(10).div(300)))).mul(Decimal(2).toPower(game.upgrades[18]))
+        return Decimal(2+game.elementalprestiges/10000).add(getElementalParticleEffect(10)).toPower((game.power.log(10).minus(145).div(10).div(game.power.log(10).div(300)))).mul(Decimal(2).toPower(game.upgrades[18])).mul(getElementalParticleEffect(13))
         else return Decimal(0)      
     }
   }
@@ -38,7 +38,11 @@ function getPrestigeValue(r) {
   
 buymax("particles")
 openTab("particles",0)
-
+if(game.milestonetype0 == 0)
+{
+  game.milestonetype0 = 1
+  milestonetype0controll()
+}
 redraw()
       }
   }

@@ -1,5 +1,5 @@
 #counter {
-  font-size: 3vw;
+  font-size: 2.5vw;
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
@@ -46,7 +46,7 @@
 #powerdiv {
   display: block;
   float: right;
-  font-size: 3vw;
+  font-size: 2.5vw;
   border-radius: 20px;
   border: solid black 1px;
   padding: 1vh;
@@ -196,7 +196,14 @@
   border: inset red 0.6vh;
   background: radial-gradient(circle, rgba(113,10,10,1) 3%, rgba(150,9,9,1) 9%, rgba(149,71,71,1) 21%, rgba(200,32,32,1) 45%, rgba(124,5,5,1) 72%);
 
-  margin-left: 33%;
+  margin-left: 18%;
+}
+#eparticle13 {
+  display: none;
+  border: inset red 0.6vh;
+  background: radial-gradient(circle, rgba(113,10,10,1) 3%, rgba(150,9,9,1) 9%, rgba(149,71,71,1) 21%, rgba(200,32,32,1) 45%, rgba(124,5,5,1) 72%);
+
+  margin-left: 1%;
 }
 /*
 <span id="tooltip1">For Particles other then quarks you have to sort >9 particles at once</span>
@@ -226,3 +233,7 @@
   opacity: 1;
 }
 */
+.milestoneholder
+{
+  display: inline;
+}

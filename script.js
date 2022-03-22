@@ -25,8 +25,8 @@ function resetupgrades() {
 }
 function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0
-  for (let i = game.eparticles.length; i < 13; i++) game.eparticles[i] = "0"
-  for (let i = eparticles.length; i < 13; i++) eparticles[i] = Decimal(0)
+  for (let i = game.eparticles.length; i < 14; i++) game.eparticles[i] = "0"
+  for (let i = eparticles.length; i < 14; i++) eparticles[i] = Decimal(0)
 }
 function reset() {
   game = {
@@ -40,11 +40,11 @@ function reset() {
     elementalparticles: Decimal(0),
     elementalprestiges: 0,
     totalelementalparticles: Decimal(0),
+    milestonetype0: 0,
   }
   resetupgrades()
   eparticles = []
 }
-
 
 function save() {
   for (let i = 0; i < eparticles.length; i++)
@@ -59,7 +59,6 @@ function load() {
     loadGame(loadgame)
   }
 }
-
 
 function loadGame(loadgame) {
   //Sets each variable in 'game' to the equivalent variable in 'loadgame' (the saved file)
@@ -87,9 +86,6 @@ function loadGame(loadgame) {
   }
 }
 
-
-
-
 BigInt.prototype.formateNumber = function (max = 5) {
   formatestring = this.toString()
   if (formatestring.length >= max) {
@@ -109,11 +105,13 @@ Number.prototype.formateNumber = function (max = 1e5) {
   return formatestring
 }
 function get_pSpeed() {
-  return (basicparticlespeed * (game.upgrades[1] + 1) + game.upgrades[14])
+  return basicparticlespeed * (game.upgrades[1] + 1) + game.upgrades[14]
 }
 
 Decimal.prototype.formateNumber = function (max = 5, r = 1) {
-  if (this.e >= max) {
+  if (this.e >= 100000) {
+    formatestring = 1 + "ee" + Math.log10(this.e).toFixed(1)
+  } else if (this.e >= max) {
     formatestring = this.toExponential(1).replace("+", "")
   } else formatestring = this.toFixed(r, Decimal.ROUND_DOWN)
   return formatestring
@@ -127,35 +125,34 @@ function tick() {
   updateCounterValue()
   if (prestigelist[currenttab]) updatePrestigeButton(currenttab)
   updateParticlesValue()
- 
+
   e.powervalue.innerText = game.power.formateNumber()
 }
 
-
 function LOADING() {
   loading = 0
-reset()
+  reset()
 
-load()
-addarrays()
-for (let i = 0; i < game.eparticles.length; i++) {
-  eparticles[i] = Decimal(game.eparticles[i])
-}
+  load()
+  addarrays()
+  for (let i = 0; i < game.eparticles.length; i++) {
+    eparticles[i] = Decimal(game.eparticles[i])
+  }
 
-loadIDS()
+  loadIDS()
 
-side["l"] = getComputedStyle(e.particlesdiv).left
-side["l"] = Number(side["l"].substring(0, side["l"].length - 2))
-side["t"] = getComputedStyle(e.particlesdiv).top
-side["t"] = Number(side["t"].substring(0, side["t"].length - 2))
-side["r"] = getComputedStyle(e.particlesdiv).width
-side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
-side["b"] = getComputedStyle(e.particlesdiv).height
-side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) // + side.t;
+  side["l"] = getComputedStyle(e.particlesdiv).left
+  side["l"] = Number(side["l"].substring(0, side["l"].length - 2))
+  side["t"] = getComputedStyle(e.particlesdiv).top
+  side["t"] = Number(side["t"].substring(0, side["t"].length - 2))
+  side["r"] = getComputedStyle(e.particlesdiv).width
+  side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
+  side["b"] = getComputedStyle(e.particlesdiv).height
+  side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) // + side.t;
+  milestonetype0controll()
   redraw()
 
   for (let i = 0; i < upgrades; i++) {
-   
     buyupgrade(i)
   }
   if (game.upgrades[i] >= upgradelimits[i]) {
@@ -170,17 +167,15 @@ side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) // + side.t;
   openTab("particles", 0)
   setInterval(reveal, 5000)
   buildElementalParticlesSortingChances()
-  if(game.upgrades[15] == 1)
-  {
-  autobuyer1timer = setInterval(buymax,1000,"particles")
-  upgradelimits[16] = 1
+  if (game.upgrades[15] == 1) {
+    autobuyer1timer = setInterval(buymax, 1000, "particles")
+    upgradelimits[16] = 1
   }
- 
+
   setInterval(save, 1000)
   ticktimer = setInterval(tick, game.tickinterval)
 
   loading = 1
-
 }
 
 function reveal() {
@@ -189,40 +184,36 @@ function reveal() {
     e.elementalTabsButton.style.display = "block"
   }
   if (game.upgrades[8] > 0) {
-  
     e.eparticle6.style.display = "block"
     e.eparticle7.style.display = "block"
     e.eparticle8.style.display = "block"
   }
   if (game.upgrades[9] > 0) {
-    
     e.eparticle3.style.display = "block"
     e.eparticle4.style.display = "block"
     e.eparticle5.style.display = "block"
   }
   if (game.upgrades[10] > 0) {
-   
     e.eparticle9.style.display = "block"
   }
   if (game.upgrades[11] > 0) {
-   
     e.eparticle10.style.display = "block"
     e.eparticle11.style.display = "block"
   }
   if (game.upgrades[12] > 0) {
-
     e.eparticle12.style.display = "block"
   }
-  if(game.elementalparticles.e > 1)
-  {
-    upgradelimits[18] = 10000
+  if (game.upgrades[19] > 0) {
+    e.eparticle13.style.display = "block"
+  }
+  if (game.elementalparticles.e > 1) {
+    upgradelimits[18] = 100
   }
 }
 
 function buymax(r) {
-  
   ifbough = false
-  for (let i = upgrades-1; i >= 0; i--) {
+  for (let i = upgrades - 1; i >= 0; i--) {
     if (costnames[i] == r) {
       do {
         ifbough = buyupgrade(i)
@@ -230,27 +221,18 @@ function buymax(r) {
     }
   }
 }
-function temphideupgrades(r)
-{
- let totalupgrades = 0
-  for(let i = 0;i < upgrades; i++)
-  {
-    if(game.upgrades[i]<upgradelimits[i])
-      {
-        if(costnames[i] == r)
-        {
-          totalupgrades++
-          if(totalupgrades > 6)
-          {
-            e["upgrade" + i].style.display = "none"
-          }
-          else
-          e["upgrade" + i].style.display = "block"
-        }
+function temphideupgrades(r) {
+  let totalupgrades = 0
+  for (let i = 0; i < upgrades; i++) {
+    if (game.upgrades[i] < upgradelimits[i]) {
+      if (costnames[i] == r) {
+        totalupgrades++
+        if (totalupgrades > 6) {
+          e["upgrade" + i].style.display = "none"
+        } else e["upgrade" + i].style.display = "block"
       }
-  
-
-}
+    }
+  }
 }
 function openupgrades(r) {
   for (let i = 0; i < upgrades; i++)
@@ -259,7 +241,7 @@ function openupgrades(r) {
         e["upgrade" + i].style.display = "block"
       } else e["upgrade" + i].style.display = "none"
     }
-    temphideupgrades(r)
+  temphideupgrades(r)
 }
 function openTab(r, n) {
   e.countername.innerHTML = counternames[n] + ": "
@@ -271,12 +253,13 @@ function openTab(r, n) {
   e.powervalue.innerText = game.power.formateNumber()
   if (prestigelist[r]) updatePrestigeButton(r)
   updateParticlesValue()
+  milestonetype0controll()
 }
 function updateCounterValue() {
   e.countervalue.innerText = game[currenttab].formateNumber()
 }
 function updateParticlesValue() {
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 14; i++) {
     e["eparticlecontainer" + i].innerText = eparticles[i].formateNumber()
     e["eparticlemultiplier" + i].innerText = getElementalParticleEffect(
       i
@@ -287,34 +270,88 @@ function updateParticlesValue() {
 function getElementalParticleEffect(r) {
   switch (r) {
     case 0:
-      return eparticles[0].plus(1).log(eparticles[0].e + 2).mul(getElementalParticleEffect(3))
+      return eparticles[0]
+        .plus(1)
+        .log(eparticles[0].e + 2)
+        .mul(getElementalParticleEffect(3))
+        .toPower(getElementalParticleEffect(12))
     case 1:
       if (eparticles[1].equals(0)) return 1
       else
         return Decimal(2)
           .plus(eparticles[1].log(2))
-          .toPower(eparticles[1].e + 1).mul(getElementalParticleEffect(4))
+          .toPower(eparticles[1].e + 1)
+          .mul(getElementalParticleEffect(4))
+          .toPower(getElementalParticleEffect(12))
     case 2:
-      return eparticles[2].plus(1).log(10).div(50).plus(1).mul(getElementalParticleEffect(5))
-     case 3:
-       return eparticles[3].plus(1).log(150).plus(1)
-      case 4:
-        return eparticles[4].plus(1).log(8).plus(1)
-      case 5:
-        return eparticles[5].plus(1).log(80000).div(2).plus(1)
+      return eparticles[2]
+        .plus(1)
+        .log(10)
+        .div(50)
+        .plus(1)
+        .mul(getElementalParticleEffect(5))
+        .toPower(getElementalParticleEffect(12))
+    case 3:
+      return eparticles[3]
+        .plus(1)
+        .log(150)
+        .plus(1)
+        .toPower(getElementalParticleEffect(12))
+    case 4:
+      return eparticles[4]
+        .plus(1)
+        .log(8)
+        .plus(1)
+        .toPower(getElementalParticleEffect(12))
+    case 5:
+      return eparticles[5]
+        .plus(1)
+        .log(80000)
+        .div(2)
+        .plus(1)
+        .toPower(getElementalParticleEffect(12))
     case 6:
-      return eparticles[6].plus(1).log(10).mul(getElementalParticleEffect(11))
+      return eparticles[6]
+        .plus(1)
+        .log(10)
+        .mul(getElementalParticleEffect(11))
+        .toPower(getElementalParticleEffect(12))
     case 7:
-      return eparticles[7].plus(1).log(10).plus(1).mul(getElementalParticleEffect(11))
+      return eparticles[7]
+        .plus(1)
+        .log(10)
+        .plus(1)
+        .mul(getElementalParticleEffect(11))
+        .toPower(getElementalParticleEffect(12))
     case 8:
-      return eparticles[8].plus(1).log(10).div(50).plus(1).mul(getElementalParticleEffect(11))
+      return eparticles[8]
+        .plus(1)
+        .log(10)
+        .div(50)
+        .plus(1)
+        .mul(getElementalParticleEffect(11))
+        .toPower(getElementalParticleEffect(12))
     case 9:
-      return eparticles[9].plus(1).log(50).plus(1)
+      return eparticles[9]
+        .plus(1)
+        .log(50)
+        .plus(1)
+        .toPower(getElementalParticleEffect(12))
     case 10:
-      return eparticles[10].plus(1).log(1e15)
+      return eparticles[10]
+        .plus(1)
+        .log(1e15)
+        .toPower(getElementalParticleEffect(12))
     case 11:
-      return eparticles[11].plus(1).log(1e15).plus(1)
-      
+      return eparticles[11]
+        .plus(1)
+        .log(1e13)
+        .plus(1)
+        .toPower(getElementalParticleEffect(12))
+    case 12:
+      return eparticles[12].plus(1).log(1e7).plus(1).log(50).plus(1)
+    case 13:
+      return eparticles[13].plus(1).log(2).plus(1)
     default:
       return Decimal(0)
   }
@@ -322,50 +359,88 @@ function getElementalParticleEffect(r) {
 function clearEparticles() {
   for (let i = 0; i < eparticles.length; i++) eparticles[i] = Decimal(0)
 }
-let elementalParticlesRawChances =[4,8,2,4,8,2,4,8,2,5,4,3,0]
-let elementalParticlesChances = [0]//, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+let elementalParticlesRawChances = [4, 8, 2, 4, 8, 2, 4, 8, 2, 5, 4, 3, 1, 1]
+let elementalParticlesChances = [0] //, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 let elementalParticlesChances10 = [0, 3, 8, 10]
 let elementalParticlesFullChance = 0
-function buildElementalParticlesSortingChances()
-{
-for(let i = 1; i <= elementalParticlesRawChances.length;i++)
-elementalParticlesChances[i] = elementalParticlesRawChances[i-1] + elementalParticlesChances[i-1]
-elementalParticlesFullChance = elementalParticlesChances[elementalParticlesChances.length-1]
+function buildElementalParticlesSortingChances() {
+  for (let i = 1; i <= elementalParticlesRawChances.length; i++)
+    elementalParticlesChances[i] =
+      elementalParticlesRawChances[i - 1] + elementalParticlesChances[i - 1]
+  elementalParticlesFullChance =
+    elementalParticlesChances[elementalParticlesChances.length - 1]
 }
 function sortElementalParticles(r) {
   let random
-   let multiplicator = getElementalParticleEffect(9)
+  let multiplicator = getElementalParticleEffect(9)
   let allowedparticles = game.elementalparticles.toSD(2, Decimal.ROUND_DOWN)
 
   for (let i = 0; i < r; i++) {
     random = Math.floor(Math.random() * elementalParticlesFullChance)
-   
-    for (let i = 0; i < 13; i++) {
+
+    for (let i = 0; i < 14; i++) {
       if (
         random >= elementalParticlesChances[i] &&
         random < elementalParticlesChances[i + 1]
       ) {
-        if (i < 3) eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+        if (i < 3)
+          eparticles[i] = eparticles[i].add(
+            allowedparticles.div(100).mul(multiplicator)
+          )
         if (i >= 3 && i <= 5)
           if (game.upgrades[9] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
-          else eparticles[1] = eparticles[1].add(allowedparticles.div(100).mul(multiplicator))
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[1] = eparticles[1].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
         if (i >= 6 && i <= 8)
           if (game.upgrades[8] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
-          else eparticles[2] = eparticles[2].add(allowedparticles.div(100).mul(multiplicator))
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[2] = eparticles[2].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
         if (i == 9)
           if (game.upgrades[10] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
         if (i >= 10 && i <= 11)
           if (game.upgrades[11] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
         if (i == 12)
           if (game.upgrades[12] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i == 13)
+          if (game.upgrades[19] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
       }
     }
   }
@@ -383,15 +458,11 @@ function sortElementalParticles10() {
         random >= elementalParticlesChances10[j] &&
         random < elementalParticlesChances10[j + 1]
       )
-      if(j == 2)
-      {
-      if(eparticles[0].gte(10) || eparticles[1].gte(10) )
-        eparticles[j] = eparticles[j].plus(1)
-        else
-        eparticles[0] = eparticles[0].plus(1)
-      }
-      else
-      eparticles[j] = eparticles[j].plus(1)
+        if (j == 2) {
+          if (eparticles[0].gte(10) || eparticles[1].gte(10))
+            eparticles[j] = eparticles[j].plus(1)
+          else eparticles[0] = eparticles[0].plus(1)
+        } else eparticles[j] = eparticles[j].plus(1)
     }
   }
   game.elementalparticles = game.elementalparticles.sub(allowedparticles)
@@ -435,22 +506,25 @@ function sortElementalParticles100() {
   game.elementalparticles = game.elementalparticles.sub(allowedparticles)
 }
 function sortEparticles(r) {
-  if(game.elementalparticles.e < 4)
-  {
-  if (game.elementalparticles.gte(100)) sortElementalParticles(r)
-  if (game.elementalparticles.gte(10)) sortElementalParticles100()
-  if (game.elementalparticles.gte(1)) sortElementalParticles10()
+  if (game.elementalparticles.e < 4) {
+    if (game.elementalparticles.gte(100)) sortElementalParticles(r)
+    if (game.elementalparticles.gte(10)) sortElementalParticles100()
+    if (game.elementalparticles.gte(1)) sortElementalParticles10()
+  } else sortElementalParticles(r)
+  if (game.elementalparticles.lt(0)) game.elementalparticles = Decimal(0)
+}
+function getAllElementalParticlesEffect() {
+  for (let i = 0; i < 14; i++) {
+    console.log(i + " " + getElementalParticleEffect(i).formateNumber())
   }
-  else
-  sortElementalParticles(r)
-  if(game.elementalparticles.lt(0))
-  game.elementalparticles = Decimal(0)
 }
-function getAllElementalParticlesEffect()
-{
-for(let i = 0; i < 13; i++)
-{
- console.log(i + " "+ getElementalParticleEffect(i).formateNumber()) 
-}
-
+function milestonetype0controll() {
+  if (game.milestonetype0 == 0) {
+    e.milestonetype0holder0.innerText = " / 1e146"
+  } else e.milestonetype0holder0.innerText = ""
+  if (currenttab == "elementalparticles")
+    if (game.milestonetype0 == 1) {
+      e.milestonetype0holder1.innerText = " / 2e67"
+    } else e.milestonetype0holder1.innerText = ""
+  else e.milestonetype0holder1.innerText = ""
 }

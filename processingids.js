@@ -9,7 +9,7 @@ let upgradedescription = [
   "#8 Log1000(Power) Multiply Particles",
   "#9 Unlock Leptons",
   "#10 Unlock High Quarks",
-  "#11 Unlock Positrons",
+  "#11 Unlock Positron(Lepton)",
   "#12 Unlock Bosons",
   "#13 Unlock Higgs Boson",
   "#14 +0.1 to Upgrade #4 Base ",
@@ -17,7 +17,8 @@ let upgradedescription = [
   "#16 Primorial Particles Upgrades Autobuyer ",
   "#17 /2 Primorial Particles Upgrades Autobuyer Interval",
   "#18 Upgrades #3,#4,#5 are bought 100 at once",
-  "#19 x2 Elemental Particles Gain"
+  "#19 x2 Elemental Particles Gain",
+  "#20 Unlock Neutrino"
 ]
 let eparticledescription = [
   "to Primorial Particles gain base ",
@@ -32,7 +33,8 @@ let eparticledescription = [
   "Particles Per Sorting",
   "to Elemental Particles Base Gain",
   "Leptons Effect",
-  "WIP",
+  "All Previous Particles Effect",
+  " Elemental Particles Gain"
 ]
 let upgrades = upgradedescription.length
 let costnames = [
@@ -55,6 +57,7 @@ let costnames = [
   "elementalparticles",
   "elementalparticles",
   "particles",
+  "elementalparticles",
 ]
 
 let counternames = ["Primorial particles", "Elemental particles"]
@@ -70,8 +73,9 @@ let particlename = [
   "Tau",
   "Positron",
   "Gluon",
-  "Proton",
+  "Photon",
   "Higgs Boson",
+  "Neutrino",
 ]
 let eparticleseffectsymbols = [
   "+ ",
@@ -86,7 +90,8 @@ let eparticleseffectsymbols = [
   " x ",
   " + ",
   " x ",
-  "WIP",
+  "^ ",
+  "x "
 ]
 let colors = [
   "#fcba03",
@@ -144,6 +149,9 @@ upgradelimits[15] = 1
 upgradelimits[16] = 0
 upgradelimits[17] = 1
 upgradelimits[18] = 0
+upgradelimits[19] = 0
+if(game.upgrades[12] == 1)
+upgradelimits[19] = 1
 
 for (let i = 0; i < upgrades; i++) {
   tag = document.createElement("button")
@@ -159,7 +167,7 @@ for (let i = 0; i < upgrades; i++) {
     "</p>"
   e.upgradesdiv.appendChild(tag)
 }
-for (let i = 0; i < 13; i++) {
+for (let i = 0; i < 14; i++) {
   tag = document.createElement("p")
   tag.setAttribute("class", "eparticle")
   tag.setAttribute("id", "eparticle" + i)
