@@ -268,13 +268,13 @@ function getElementalParticleEffect(r) {
           .plus(eparticles[1].log(2))
           .toPower(eparticles[1].e + 1)
     case 2:
-      return Decimal(1).plus(eparticles[2].log(10) / 50)
+      return Decimal(1).plus(eparticles[2].plus(1).log(10) / 50)
     case 6:
-      return Decimal(eparticles[6].log(10))
+      return Decimal(eparticles[6].plus(1).log(10))
     case 7:
       return Decimal(eparticles[7].plus(1).log(10).plus(1))
     case 8:
-      return Decimal(1).plus(eparticles[8].log(10) / 50)
+      return Decimal(1).plus(eparticles[8].plus(1).log(10) / 50)
    
       
     default:
