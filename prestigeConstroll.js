@@ -2,7 +2,7 @@ function getPrestigeValue(r) {
     switch (r) {
       case "elementalparticles":
           if(game.power.e > 145)
-        return Decimal(2+game.elementalprestiges/10000).toPower((game.power.e - 145)/10/(game.power.e/300)) 
+        return Decimal(2+game.elementalprestiges/10000).add(getElementalParticleEffect(10)).toPower((game.power.log(10).minus(145).div(10).div(game.power.log(10).div(300)))).mul(Decimal(2).toPower(game.upgrades[18]))
         else return Decimal(0)      
     }
   }
@@ -12,14 +12,16 @@ function getPrestigeValue(r) {
   }
   function doElementalPrestige()
   {
+    
       if(game.power.e > 145)
       {
+        game.elementalparticles = game.elementalparticles.add( getPrestigeValue("elementalparticles"))
     for(let i = 0; i < upgrades; i++)
   {
       if(costnames[i] == "particles")
       game.upgrades[i] = 0
   }
-  game.elementalparticles = game.elementalparticles.add( getPrestigeValue("elementalparticles"))
+  
   game.totalelementalparticles =game.totalelementalparticles.add( getPrestigeValue("elementalparticles"))
   game.power = Decimal(0)
   game.particles = Decimal(0)

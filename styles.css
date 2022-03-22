@@ -174,12 +174,16 @@
 }
 #eparticle6,
 #eparticle7,
-#eparticle8,
-#eparticle9 {
+#eparticle8
+{
   background: radial-gradient(circle, rgba(38,189,201,1) 5%, rgba(17,145,227,1) 25%, rgba(51,119,213,1) 50%, rgba(7,88,191,1) 75%, rgba(0,17,249,1) 100%);
   display: none;
   border: inset blue 0.6vh;
-  
+}
+#eparticle9 {
+  display: none;
+  border: inset rgb(255, 0, 255) 0.6vh;
+  background: radial-gradient(circle, rgba(222,2,255,1) 15%, rgba(219,30,208,1) 25%, rgba(210,41,152,1) 50%, rgba(194,15,136,1) 75%, rgba(166,17,17,1) 100%);
 }
 #eparticle10,
 #eparticle11 {

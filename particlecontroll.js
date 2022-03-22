@@ -84,7 +84,7 @@ function hit(n = 1) {
   //1).toPower(Decimal(2).toPower(game.upgrades[5])).formateNumber())
   
   pwrl = game.power.e
-  gap = Decimal(n).plus(getElementalParticleEffect(0)).mul(game.upgrades[2]+1).mul(Math.pow(1.011, game.upgrades[2])).mul((pwrl / Math.log10(1.2) * game.upgrades[1]) / 100 + 1).mul(Decimal(2).plus(game.upgrades[13]* 0.1).toPower(game.upgrades[3])).mul(Decimal(pwrl / 3).mul(game.upgrades[7]).plus(1)).mul(getElementalParticleEffect(1)).toPower(getElementalParticleEffect(2))
+  gap = Decimal(n).plus(getElementalParticleEffect(0)).mul(game.upgrades[2]+1).mul(Decimal(1.011).toPower(game.upgrades[2])).mul((pwrl / Math.log10(1.2) * game.upgrades[1]) / 100 + 1).mul(Decimal(2).plus(game.upgrades[13]* 0.1).toPower(game.upgrades[3])).mul(Decimal(pwrl / 3).mul(game.upgrades[7]).plus(1)).mul(getElementalParticleEffect(1)).toPower(getElementalParticleEffect(2))
  //console.log(gap.formateNumber())
   game.particles= game.particles.plus(gap )
 

@@ -8,7 +8,7 @@ let upgradedescription = [
   "#1 Add Particle ",
   "#2 Increase Particle Speed",
   "#3 Increase Gain Per Hit",
-  "#4 Multiply Gain By Hit",
+  "#4 Multiply Gain Per Hit",
   "#5 Increase Power Per Hit",
   "#6 Square Power Gain",
   "#7 Log8(Particles) Multiply Power",
@@ -21,6 +21,9 @@ let upgradedescription = [
   "#14 +0.1 to Upgrade #4 Base ",
   "#15 +1 Particle Base Speed",
   "#16 Primorial Particles Upgrades Autobuyer ",
+  "#17 /2 Primorial Particles Upgrades Autobuyer Interval",
+  "#18 Upgrades #3,#4,#5 are bought 100 at once",
+  "#19 x2 Elemental Particles Gain"
 ]
 let eparticledescription = [
   "to Primorial Particles gain base ",
@@ -34,7 +37,7 @@ let eparticledescription = [
   "Power Gain",
   "Particles Per Sorting",
   "to Elemental Particles Base Gain",
-  "Elemental Particles",
+  "Leptons Effect",
   "WIP",
 ]
 let upgrades = upgradedescription.length
@@ -55,6 +58,9 @@ let costnames = [
   "elementalparticles",
   "elementalparticles",
   "elementalparticles",
+  "elementalparticles",
+  "elementalparticles",
+  "particles",
 ]
 let counternames = ["Primorial particles", "Elemental particles"]
 let particlename = [
@@ -82,7 +88,7 @@ let eparticleseffectsymbols = [
   "+ ",
   "x ",
   "^ ",
-  " + ",
+  " x ",
   " + ",
   " x ",
   "WIP",
@@ -96,6 +102,10 @@ for (let i = 0; i < upgrades; i++) {
 }
 upgradelimits[0] = 50
 upgradelimits[1] = 50
+upgradelimits[2] = 20000
+upgradelimits[3] = 2000
+upgradelimits[4] = 2000
+
 upgradelimits[5] = 6
 
 for (let i = 6; i < 13; i++) {
@@ -103,6 +113,8 @@ for (let i = 6; i < 13; i++) {
 }
 upgradelimits[14] = 1
 upgradelimits[15] = 1
+upgradelimits[16] = 0
+upgradelimits[17] = 1
 
 function getCostName(n) {
   if (costnames[n] == "elementalparticles")

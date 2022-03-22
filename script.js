@@ -160,13 +160,15 @@ function LOADING() {
   if(game.upgrades[15] == 1)
   {
   autobuyer1timer = setInterval(buymax,1000,"particles")
+  upgradelimits[16] = 1
   }
+
   loading = 1
 
 }
 
 function reveal() {
-  if (game.power.e > 149 || game.elementalprestiges > 0) {
+  if (game.power.e > 145 || game.elementalprestiges > 0) {
     e.buyMax.style.display = "block"
     e.elementalTabsButton.style.display = "block"
   }
@@ -260,22 +262,33 @@ function updateParticlesValue() {
 function getElementalParticleEffect(r) {
   switch (r) {
     case 0:
-      return eparticles[0].plus(1).log(eparticles[0].e + 2)
+      return eparticles[0].plus(1).log(eparticles[0].e + 2).mul(getElementalParticleEffect(3))
     case 1:
       if (eparticles[1].equals(0)) return 1
       else
         return Decimal(2)
           .plus(eparticles[1].log(2))
-          .toPower(eparticles[1].e + 1)
+          .toPower(eparticles[1].e + 1).mul(getElementalParticleEffect(4))
     case 2:
-      return Decimal(1).plus(eparticles[2].plus(1).log(10) / 50)
+      return eparticles[2].plus(1).log(10).div(50).plus(1).mul(getElementalParticleEffect(5))
+     case 3:
+       return eparticles[3].plus(1).log(150).plus(1)
+      case 4:
+        return eparticles[4].plus(1).log(8).plus(1)
+      case 5:
+        return eparticles[5].plus(1).log(80000).div(2).plus(1)
     case 6:
-      return Decimal(eparticles[6].plus(1).log(10))
+      return eparticles[6].plus(1).log(10).mul(getElementalParticleEffect(11))
     case 7:
-      return Decimal(eparticles[7].plus(1).log(10).plus(1))
+      return eparticles[7].plus(1).log(10).plus(1).mul(getElementalParticleEffect(11))
     case 8:
-      return Decimal(1).plus(eparticles[8].plus(1).log(10) / 50)
-   
+      return eparticles[8].plus(1).log(10).div(50).plus(1).mul(getElementalParticleEffect(11))
+    case 9:
+      return eparticles[9].plus(1).log(50).plus(1)
+    case 10:
+      return eparticles[10].plus(1).log(1e15)
+    case 11:
+      return eparticles[11].plus(1).log(1e15).plus(1)
       
     default:
       return Decimal(0)
@@ -296,7 +309,7 @@ elementalParticlesFullChance = elementalParticlesChances[elementalParticlesChanc
 }
 function sortElementalParticles(r) {
   let random
-
+   let multiplicator = getElementalParticleEffect(9)
   let allowedparticles = game.elementalparticles.toSD(2, Decimal.ROUND_DOWN)
 
   for (let i = 0; i < r; i++) {
@@ -307,27 +320,27 @@ function sortElementalParticles(r) {
         random >= elementalParticlesChances[i] &&
         random < elementalParticlesChances[i + 1]
       ) {
-        if (i < 3) eparticles[i] = eparticles[i].add(allowedparticles.div(100))
+        if (i < 3) eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
         if (i >= 3 && i <= 5)
           if (game.upgrades[9] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100))
-          else eparticles[1] = eparticles[1].add(allowedparticles.div(100))
+            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+          else eparticles[1] = eparticles[1].add(allowedparticles.div(100).mul(multiplicator))
         if (i >= 6 && i <= 8)
           if (game.upgrades[8] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100))
-          else eparticles[2] = eparticles[2].add(allowedparticles.div(100))
+            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+          else eparticles[2] = eparticles[2].add(allowedparticles.div(100).mul(multiplicator))
         if (i == 9)
           if (game.upgrades[10] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100))
+            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
         if (i >= 10 && i <= 11)
           if (game.upgrades[11] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100))
+            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
         if (i == 12)
           if (game.upgrades[12] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(100))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(100))
+            eparticles[i] = eparticles[i].add(allowedparticles.div(100).mul(multiplicator))
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(100).mul(multiplicator))
       }
     }
   }
@@ -405,4 +418,14 @@ function sortEparticles(r) {
   }
   else
   sortElementalParticles(r)
+  if(game.elementalparticles.lt(0))
+  game.elementalparticles = Decimal(0)
+}
+function getAllElementalParticlesEffect()
+{
+for(let i = 0; i < 13; i++)
+{
+ console.log(i + " "+ getElementalParticleEffect(i).formateNumber()) 
+}
+
 }
