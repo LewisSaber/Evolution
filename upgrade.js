@@ -68,6 +68,7 @@ function buyupgrade(r) {
       case 10:
       case 11:
         upgradelimits[r+1] = 1
+        openTab("elementalparticles",1)
         reveal()
         break;
       case 12:

@@ -134,8 +134,9 @@ function tick() {
 
 function LOADING() {
 reset()
-addarrays()
+
 load()
+addarrays()
 for (let i = 0; i < game.eparticles.length; i++) {
   eparticles[i] = Decimal(game.eparticles[i])
 }
@@ -187,31 +188,28 @@ function reveal() {
     e.elementalTabsButton.style.display = "block"
   }
   if (game.upgrades[8] > 0) {
-    e.upgrade9.style.display = "block"
+  
     e.eparticle6.style.display = "block"
     e.eparticle7.style.display = "block"
     e.eparticle8.style.display = "block"
   }
   if (game.upgrades[9] > 0) {
-    e.upgrade9.style.display = "none"
-    e.upgrade10.style.display = "block"
+    
     e.eparticle3.style.display = "block"
     e.eparticle4.style.display = "block"
     e.eparticle5.style.display = "block"
   }
   if (game.upgrades[10] > 0) {
-    e.upgrade10.style.display = "none"
-    e.upgrade11.style.display = "block"
+   
     e.eparticle9.style.display = "block"
   }
   if (game.upgrades[11] > 0) {
-    e.upgrade11.style.display = "none"
-    e.upgrade12.style.display = "block"
+   
     e.eparticle10.style.display = "block"
     e.eparticle11.style.display = "block"
   }
   if (game.upgrades[12] > 0) {
-    e.upgrade12.style.display = "none"
+
     e.eparticle12.style.display = "block"
   }
   if(game.elementalparticles.e > 1)
