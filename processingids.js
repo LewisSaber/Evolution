@@ -18,7 +18,8 @@ let upgradedescription = [
   "#17 /2 Primorial Particles Upgrades Autobuyer Interval",
   "#18 Upgrades #3,#4,#5 are bought 100 at once",
   "#19 x2 Elemental Particles Gain",
-  "#20 Unlock Neutrino"
+  "#20 Unlock Neutrino",
+  "#21 /2 Primorial Particles Upgrades Autobuyer Interval",
 ]
 let eparticledescription = [
   "to Primorial Particles gain base ",
@@ -57,6 +58,7 @@ let costnames = [
   "elementalparticles",
   "elementalparticles",
   "particles",
+  "elementalparticles",
   "elementalparticles",
 ]
 
@@ -152,6 +154,7 @@ upgradelimits[18] = 0
 upgradelimits[19] = 0
 if(game.upgrades[12] == 1)
 upgradelimits[19] = 1
+upgradelimits[20] = 0
 
 for (let i = 0; i < upgrades; i++) {
   tag = document.createElement("button")

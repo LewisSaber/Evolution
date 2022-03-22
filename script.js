@@ -171,6 +171,14 @@ function LOADING() {
     autobuyer1timer = setInterval(buymax, 1000, "particles")
     upgradelimits[16] = 1
   }
+  if (game.upgrades[16] == 1) {
+    autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
+    upgradelimits[20] = 1
+  }
+  if (game.upgrades[20] == 1) {
+    autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
+    //upgradelimits[16] = 1
+  }
 
   setInterval(save, 1000)
   ticktimer = setInterval(tick, game.tickinterval)

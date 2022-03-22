@@ -40,7 +40,8 @@ function getCost(r) {
       return Decimal("1e500").toPower(game.upgrades[18] + 1)
     case 19:
         return Decimal(1e64)
-        
+    case 20:
+        return Decimal(2e30)    
     default:
       return Decimal(1e300)
      
@@ -85,10 +86,16 @@ function buyupgrade(r) {
       break
       case 16:
         clearInterval( autobuyer1timer)
-        setInterval(buymax,1000/game.upgrades[16]+1,"particles")
-
+        autobuyer1timer =setInterval(buymax,1000/game.upgrades[16]+1,"particles")
+        upgradelimits[20] = 1
       break
-
+      case 19:
+        reveal()
+        break
+     case 20:
+        clearInterval( autobuyer1timer)
+        autobuyer1timer = setInterval(buymax,1000/(game.upgrades[16]+1)/game.upgrades[20]+1,"particles")
+        break
       default:
 
         break
