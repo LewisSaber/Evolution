@@ -1,9 +1,3 @@
-var allElements = document.querySelectorAll("*[id]")
-let e = {}
-for (let i = 0, n = allElements.length; i < n; i++) {
-  e[allElements[i].id] = allElements[i]
-}
-
 let upgradedescription = [
   "#1 Add Particle ",
   "#2 Increase Particle Speed",
@@ -62,6 +56,7 @@ let costnames = [
   "elementalparticles",
   "particles",
 ]
+
 let counternames = ["Primorial particles", "Elemental particles"]
 let particlename = [
   "Up Quark",
@@ -93,9 +88,34 @@ let eparticleseffectsymbols = [
   " x ",
   "WIP",
 ]
+let colors = [
+  "#fcba03",
+  "#9c052a",
+  "#2746e3",
+  "#05e858",
+  "#000000",
+  "FFFFFF",
+  "#a314b3",
+  "#f7a711",
+  "#d13838",
+  "#04dade",
+  "#e32b6f",
+]
 let prestigelist = { elementalparticles: true }
 
 let upgradelimits = []
+
+let e = {}
+
+
+
+function loadIDS(){
+var allElements = document.querySelectorAll("*[id]")
+for (let i = 0, n = allElements.length; i < n; i++) {
+  e[allElements[i].id] = allElements[i]
+}
+
+
 
 for (let i = 0; i < upgrades; i++) {
   upgradelimits[i] = 1000000
@@ -107,8 +127,16 @@ upgradelimits[3] = 2000
 upgradelimits[4] = 2000
 upgradelimits[5] = 6
 
-for (let i = 6; i < 13; i++) {
+for (let i = 6; i < 9; i++) {
   upgradelimits[i] = 1
+}
+for(let i = 8; i < 13;i++)
+{
+  if(game.upgrades[i] == 1)
+  upgradelimits[i+1] = 1
+  else
+  upgradelimits[i+1] = 0
+
 }
 upgradelimits[14] = 1
 upgradelimits[15] = 1
@@ -116,17 +144,6 @@ upgradelimits[16] = 0
 upgradelimits[17] = 1
 upgradelimits[18] = 0
 
-function getCostName(n) {
-  if (costnames[n] == "elementalparticles")
-    return (
-      " " +
-      costnames[n].charAt(0).toUpperCase() +
-      costnames[n].substring(1, 9) +
-      " " +
-      costnames[n].slice(9)
-    )
-  else return " " + costnames[n].charAt(0).toUpperCase() + costnames[n].slice(1)
-}
 for (let i = 0; i < upgrades; i++) {
   tag = document.createElement("button")
   tag.setAttribute("class", "upgrade")
@@ -170,4 +187,17 @@ for (var i = 0, n = allElements.length; i < n; ++i) {
 e = {}
 for (let i = 0, n = allElements.length; i < n; i++) {
   e[allIds[i]] = allElements[i]
+}
+
+}
+function getCostName(n) {
+  if (costnames[n] == "elementalparticles")
+    return (
+      " " +
+      costnames[n].charAt(0).toUpperCase() +
+      costnames[n].substring(1, 9) +
+      " " +
+      costnames[n].slice(9)
+    )
+  else return " " + costnames[n].charAt(0).toUpperCase() + costnames[n].slice(1)
 }

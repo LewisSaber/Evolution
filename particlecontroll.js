@@ -1,27 +1,5 @@
 side = {}
 let particleinterval
-side["l"] = getComputedStyle(e.particlesdiv).left
-side["l"] = Number(side["l"].substring(0, side["l"].length - 2))
-side["t"] = getComputedStyle(e.particlesdiv).top
-side["t"] = Number(side["t"].substring(0, side["t"].length - 2))
-side["r"] = getComputedStyle(e.particlesdiv).width
-side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
-side["b"] = getComputedStyle(e.particlesdiv).height
-side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) // + side.t;
-
-let colors = [
-  "#fcba03",
-  "#9c052a",
-  "#2746e3",
-  "#05e858",
-  "#000000",
-  "FFFFFF",
-  "#a314b3",
-  "#f7a711",
-  "#d13838",
-  "#04dade",
-  "#e32b6f",
-]
 
 function redraw() {
   e.particlesdiv.innerHTML = ""

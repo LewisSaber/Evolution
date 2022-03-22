@@ -17,7 +17,7 @@ function getCost(r) {
     case 7:
       return Decimal(5e15)
     case 8:
-      return Decimal(75)
+      return Decimal(32)
     case 9:
       return Decimal(2e6)
     case 10:
@@ -66,7 +66,11 @@ function buyupgrade(r) {
       case 9:
       case 10:
       case 11:
+        upgradelimits[r+1] = 1
+        reveal()
+        break;
       case 12:
+
       reveal()
       break
       case 15:

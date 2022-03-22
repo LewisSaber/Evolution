@@ -44,7 +44,7 @@ function reset() {
   resetupgrades()
   eparticles = []
 }
-reset()
+
 
 function save() {
   for (let i = 0; i < eparticles.length; i++)
@@ -59,7 +59,7 @@ function load() {
     loadGame(loadgame)
   }
 }
-load()
+
 
 function loadGame(loadgame) {
   //Sets each variable in 'game' to the equivalent variable in 'loadgame' (the saved file)
@@ -86,12 +86,9 @@ function loadGame(loadgame) {
     }
   }
 }
-for (let i = 0; i < game.eparticles.length; i++) {
-  eparticles[i] = Decimal(game.eparticles[i])
-}
-setInterval(save, 1000)
 
-addarrays()
+
+
 
 BigInt.prototype.formateNumber = function (max = 5) {
   formatestring = this.toString()
@@ -133,9 +130,26 @@ function tick() {
  
   e.powervalue.innerText = game.power.formateNumber()
 }
-ticktimer = setInterval(tick, game.tickinterval)
+
 
 function LOADING() {
+reset()
+addarrays()
+load()
+for (let i = 0; i < game.eparticles.length; i++) {
+  eparticles[i] = Decimal(game.eparticles[i])
+}
+
+loadIDS()
+
+side["l"] = getComputedStyle(e.particlesdiv).left
+side["l"] = Number(side["l"].substring(0, side["l"].length - 2))
+side["t"] = getComputedStyle(e.particlesdiv).top
+side["t"] = Number(side["t"].substring(0, side["t"].length - 2))
+side["r"] = getComputedStyle(e.particlesdiv).width
+side["r"] = Number(side["r"].substring(0, side["r"].length - 2)) //+ side.l;
+side["b"] = getComputedStyle(e.particlesdiv).height
+side["b"] = Number(side["b"].substring(0, side["b"].length - 2)) // + side.t;
   redraw()
 
   for (let i = 0; i < upgrades; i++) {
@@ -160,7 +174,8 @@ function LOADING() {
   upgradelimits[16] = 1
   }
  
-
+  setInterval(save, 1000)
+  ticktimer = setInterval(tick, game.tickinterval)
 
   loading = 1
 
@@ -172,23 +187,31 @@ function reveal() {
     e.elementalTabsButton.style.display = "block"
   }
   if (game.upgrades[8] > 0) {
+    e.upgrade9.style.display = "block"
     e.eparticle6.style.display = "block"
     e.eparticle7.style.display = "block"
     e.eparticle8.style.display = "block"
   }
   if (game.upgrades[9] > 0) {
+    e.upgrade9.style.display = "none"
+    e.upgrade10.style.display = "block"
     e.eparticle3.style.display = "block"
     e.eparticle4.style.display = "block"
     e.eparticle5.style.display = "block"
   }
   if (game.upgrades[10] > 0) {
+    e.upgrade10.style.display = "none"
+    e.upgrade11.style.display = "block"
     e.eparticle9.style.display = "block"
   }
   if (game.upgrades[11] > 0) {
+    e.upgrade11.style.display = "none"
+    e.upgrade12.style.display = "block"
     e.eparticle10.style.display = "block"
     e.eparticle11.style.display = "block"
   }
   if (game.upgrades[12] > 0) {
+    e.upgrade12.style.display = "none"
     e.eparticle12.style.display = "block"
   }
   if(game.elementalparticles.e > 1)
