@@ -1,18 +1,20 @@
 let isoptionson = false;
 function options() {
   if (isoptionson) {
-    particleinterval = setInterval(particlemove, 10 / game.fancymode);
-    e.optionsdiv.style.display = "none";
-    e.particlesdiv.style.display = "block";
+   particleinterval = setInterval(particlemove, 10 / game.fancymode);
+   e.optionsdiv.style.display ="none"
+    openTab("particles",0)
+
     isoptionson = false;
     e.tabsdiv.style.display = "block"
     redraw();
   } else {
     clearInterval(particleinterval);
     isoptionson = true;
-    e.particlesdiv.style.display = "none";
     e.tabsdiv.style.display = "none"
-    e.optionsdiv.style.display = "block";
+    
+    e[currenttab+"div"].style.display = "none"
+    e.optionsdiv.style.display ="block"
   }
 }
 function fancymode() {
@@ -29,12 +31,13 @@ function HardReset() {
 if (result != null)
 {
   if (result.toLowerCase() == "yes") {
-    reset();
-    tick();
-    addarrays();
+    reset()
+    tick()
+    addarrays()
     save()
     options()
     LOADING();
+    
   }
 }
 }

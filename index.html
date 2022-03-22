@@ -13,17 +13,18 @@
     <div id="powerdiv">
       Power :
       <p id="powervalue">0</p>
-      / 1e150
+      / 1e146
     </div>
     <button id="options" onclick="options()"></button>
     <div id="particlesdiv" ></div>
-    <div id="elementalparticlesdiv" ><button id="elementalprestige" class="prestigeButton" onclick="doElementalPrestige()">Prestige : +<p id="prestigevalue">0</p> Elemental particles</button></div>
+    <div id="elementalparticlesdiv" ><button id="elementalprestige" class="prestigeButton" onclick="doElementalPrestige()">Prestige : +<p id="prestigevalue">0</p> Elemental particles</button><button id="particlesort" onclick="sortEparticles(100)">Sort Elemental Particles</button></div>
     <div id="upgradesdiv"><button id="buyMax" onclick="buymax(currenttab)" class="upgrade">Buy Max</button></div>
     <div id="optionsdiv">
     <button id="hardreset" onclick="HardReset()">HARD RESET</button><button id="fancymode" onclick="fancymode()"> Smooth Particles:<br>ON</button>
     </div>
 
 <div id="tabsdiv"><button class="tabsbutton" onclick="openTab('particles',0)">Primorial<br>Particles</button><button class="tabsbutton" onclick="openTab('elementalparticles',1)" id="elementalTabsButton">Elemental<br>Particles</button></div>
+    <script src="decimal.js-master/decimal.js"></script>
     <script src="processingids.js"></script>
     <script src="script.js"></script>
     <script src="upgrade.js"></script>

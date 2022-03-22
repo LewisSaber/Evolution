@@ -1,45 +1,58 @@
 function getCost(r) {
   switch (r) {
     case 0:
-      return 4 * Math.pow(game.upgrades[0] + 1, 1 + game.upgrades[0] / 10)
+      return Decimal( 4 * Math.pow(game.upgrades[0] + 1, 1 + game.upgrades[0] / 10))
     case 1:
-      return 9 * Math.pow(game.upgrades[1] + 1, 1 + game.upgrades[1] / 10)
+      return Decimal(9 * Math.pow(game.upgrades[1] + 1, 1 + game.upgrades[1] / 10))
     case 2:
-      return 20 * Math.pow(game.upgrades[2] + 1, 1 + game.upgrades[2] / 120)
-    case 3:
-      return 10000 * Math.pow(10, game.upgrades[3])
+      return Decimal(20).mul(Decimal(game.upgrades[2] + 1).toPower(1 + game.upgrades[2] / 120) )
+   case 3:
+      return Decimal(10000).mul(Decimal(10).toPower(game.upgrades[3]))
     case 4:
-      return 100000 * Math.pow(100, game.upgrades[4])
+      return Decimal(100000).mul(Decimal(100).toPower(game.upgrades[4]))
     case 5:
-      return 1000000 * Math.pow(100, game.upgrades[5])
+      return Decimal(1000000 * Math.pow(100, game.upgrades[5]))
     case 6:
-      return 1e14
+      return Decimal(1e14)
     case 7:
-      return 5e15
+      return Decimal(5e15)
+    case 8:
+      return Decimal(1e300)
+    case 9:
+      return Decimal(1e300)
     default:
-      break
+      return Decimal(1e300)
+     
   }
 }
 
 function buyupgrade(r) {
  let bupgrade = false
-  cost = BigInt(Math.trunc(getCost(r)))
+  cost = getCost(r)
   if (
-    game[costnames[r]] >= cost &&
+    game[costnames[r]].greaterThanOrEqualTo(cost) &&
     loading == 1 &&
-    game.upgrades[r] <= upgradelimits[r]
+    game.upgrades[r] < upgradelimits[r]
   ) {
+    game.upgrades[r] += 1
     switch (r) {
       case 0:
         addparticle(1)
       
         break
+      case 8:
+      case 9:
+      case 10:
+      case 11:
+      case 12:
+      reveal()
+      break
       default:
         break
     }
-    game.upgrades[r] += 1
+   
 
-    game[costnames[r]] -= cost
+    game[costnames[r]] = game[costnames[r]].sub(cost)
     bupgrade = true
   }
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r)

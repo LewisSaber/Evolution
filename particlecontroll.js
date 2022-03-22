@@ -76,36 +76,18 @@ function drawparticles() {
   }
 }
 
-function hit(n = "1") {
-  n = BigInt(n)
-  game.power +=
-    (n *
-      BigInt(game.upgrades[4] + 1) *
-      BigInt(
-        Math.trunc(
-          (game.particles.toString().length / Math.log10(8)) *
-            game.upgrades[6] +
-            1
-        )
-      )) **
-    BigInt(Math.pow(2, game.upgrades[5]))
-  pwrl = game.power.toString().length
+function hit(n = 1) {
 
-  game.particles +=
-    n *
-    BigInt(
-      Math.trunc(
-        (game.upgrades[2] + 1) *
-          Math.pow(1.011, game.upgrades[2]) *
-          Math.pow(2, game.upgrades[3])
-      )
-    ) *
-    BigInt(
-      Math.trunc(
-        (1 + ((pwrl / Math.log10(1.2)) * game.upgrades[1]) / 100) *
-          ((pwrl / Math.log10(1000)) * game.upgrades[7] + 1)
-      )
-    )
+  game.power = game.power.plus(Decimal(n).plus(getElementalParticleEffect(6)).mul(game.upgrades[4] + 1).mul(game.particles.e / Math.log10(8) * game.upgrades[6] +
+  1).toPower(Decimal(2).toPower(game.upgrades[5])))
+ // console.log(Decimal(n).mul(game.upgrades[4] + 1).mul(game.particles.e / Math.log10(8) * game.upgrades[6] +
+  //1).toPower(Decimal(2).toPower(game.upgrades[5])).formateNumber())
+  
+  pwrl = game.power.e
+  gap = Decimal(n).plus(getElementalParticleEffect(0)).mul(game.upgrades[2]+1).mul(Math.pow(1.011, game.upgrades[2])).mul((pwrl / Math.log10(1.2) * game.upgrades[1]) / 100 + 1).mul(Decimal(2).toPower(game.upgrades[3])).mul(Decimal(pwrl / 3).mul(game.upgrades[7]).plus(1)).mul(getElementalParticleEffect(1)).toPower(getElementalParticleEffect(2))
+ //console.log(gap.formateNumber())
+  game.particles= game.particles.plus(gap )
+
   if (currenttab == "particles")
     e.countervalue.innerText = game.particles.formateNumber()
   e.powervalue.innerText = game.power.formateNumber()

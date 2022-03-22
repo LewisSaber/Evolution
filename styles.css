@@ -24,7 +24,7 @@
   width: 60%;
   height: 60%;
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 20%;
   border: solid red 0.8vh;
 }
@@ -99,21 +99,36 @@
 #elementalparticlesdiv {
   display: none;
   width: 60%;
-  height: 60%;
+  height: 83%;
   position: absolute;
-  top: 20%;
+  top: 10%;
   left: 20%;
   border: outset blue 0.8vh;
   background-color: bisque;
+  font-size: 2.4vh;
 }
 .prestigeButton {
   display: block;
-  width: 40%;
+  float: left;
+  width: 50%;
   margin-top: 1%;
   margin-left: 1%;
   font-size: 2vh;
   padding: 2%;
   border-radius: 20px;
+}
+#particlesort
+{
+  display: block;
+  float: right;
+  width: 40%;
+  font-size: 2vh;
+  padding: 2%;
+  border-radius: 20px;
+  margin-top: 1%;
+  margin-right: 1%;
+  
+
 }
 #prestigevalue {
   display: inline;
@@ -123,4 +138,58 @@
 }
 #buyMax {
   display: none;
+}
+
+.eparticle {
+  margin-top: 1%;
+  margin-bottom: 0%;
+  margin-left: 1%;
+  display: block;
+  border: inset green 0.6vh;
+  background-color: line;
+  background: radial-gradient(circle, rgba(99,210,53,1) 34%, rgba(88,213,33,1) 41%, rgba(177,230,10,1) 65%, rgba(181,255,0,1) 84%);  float: left;
+  width: 30%;
+  height: 15%;
+  text-align: center;
+  padding: 0%;
+  border-radius: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.eparticledescription {
+  display: inline;
+  margin: 0%;
+}
+.eparticlecontainer {
+  width: 100%;
+  margin: 0%;
+ 
+}
+#eparticle3,
+#eparticle4,
+#eparticle5 {
+  display: none;
+  background: linear-gradient(0deg, rgba(68,201,38,1) 3%, rgba(70,227,17,1) 25%, rgba(90,208,49,1) 50%, rgba(54,190,24,1) 75%, rgba(42,249,0,1) 100%);
+  
+}
+#eparticle6,
+#eparticle7,
+#eparticle8,
+#eparticle9 {
+  background: radial-gradient(circle, rgba(38,189,201,1) 5%, rgba(17,145,227,1) 25%, rgba(51,119,213,1) 50%, rgba(7,88,191,1) 75%, rgba(0,17,249,1) 100%);
+  display: none;
+  border: inset blue 0.6vh;
+  
+}
+#eparticle10,
+#eparticle11 {
+  display: none;
+  border: inset orange 0.6vh;
+  background: radial-gradient(circle, rgba(254,255,2,1) 5%, rgba(212,219,30,1) 25%, rgba(205,210,41,1) 50%, rgba(186,194,15,1) 75%, rgba(166,84,17,1) 100%);
+}
+#eparticle12 {
+  display: none;
+  border: inset red 0.6vh;
+  background: radial-gradient(circle, rgba(113,10,10,1) 3%, rgba(150,9,9,1) 9%, rgba(149,71,71,1) 21%, rgba(200,32,32,1) 45%, rgba(124,5,5,1) 72%);
+
+  margin-left: 33%;
 }
