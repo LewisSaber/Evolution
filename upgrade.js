@@ -63,6 +63,7 @@ function buyupgrade(r) {
         game.upgrades[r] += game.upgrades[17] * 99
         break
       case 8:
+        alert("To get particles other then quarks sort 10+ particles at once")
       case 9:
       case 10:
       case 11:
