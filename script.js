@@ -160,7 +160,7 @@ function LOADING() {
   upgradelimits[16] = 1
   }
  
-REEEEEEE
+
 
   loading = 1
 
