@@ -105,7 +105,6 @@ upgradelimits[1] = 50
 upgradelimits[2] = 20000
 upgradelimits[3] = 2000
 upgradelimits[4] = 2000
-
 upgradelimits[5] = 6
 
 for (let i = 6; i < 13; i++) {
@@ -115,6 +114,7 @@ upgradelimits[14] = 1
 upgradelimits[15] = 1
 upgradelimits[16] = 0
 upgradelimits[17] = 1
+upgradelimits[18] = 0
 
 function getCostName(n) {
   if (costnames[n] == "elementalparticles")

@@ -127,13 +127,10 @@ function tick() {
     ticktimer = setInterval(tick, game.tickinterval)
     oldtick = game.tickinterval
   }
-
-  particlesps = 0
-  //  game.particles += particlesps;
   updateCounterValue()
   if (prestigelist[currenttab]) updatePrestigeButton(currenttab)
   updateParticlesValue()
-  //e.countergain.innerText ="+ " + (particlesps * (1000 / game.tickinterval)).formateNumber();
+ 
   e.powervalue.innerText = game.power.formateNumber()
 }
 ticktimer = setInterval(tick, game.tickinterval)
@@ -142,7 +139,7 @@ function LOADING() {
   redraw()
 
   for (let i = 0; i < upgrades; i++) {
-    //callupgrades["buyupgrade" + i]();
+   
     buyupgrade(i)
   }
   if (game.upgrades[i] >= upgradelimits[i]) {
@@ -162,6 +159,11 @@ function LOADING() {
   autobuyer1timer = setInterval(buymax,1000,"particles")
   upgradelimits[16] = 1
   }
+  if(game.elementalprestiges.e > 1)
+  {
+    upgradelimits[18] = 10000
+  }
+
 
   loading = 1
 
@@ -191,6 +193,10 @@ function reveal() {
   }
   if (game.upgrades[12] > 0) {
     e.eparticle12.style.display = "block"
+  }
+  if(game.elementalparticles.e > 1)
+  {
+    upgradelimits[18] = 10000
   }
 }
 
