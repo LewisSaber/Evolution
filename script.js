@@ -159,10 +159,7 @@ function LOADING() {
   autobuyer1timer = setInterval(buymax,1000,"particles")
   upgradelimits[16] = 1
   }
-  if(game.elementalprestiges.e > 1)
-  {
-    upgradelimits[18] = 10000
-  }
+ 
 
 
   loading = 1
