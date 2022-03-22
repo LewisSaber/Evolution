@@ -130,7 +130,7 @@ upgradelimits[5] = 6
 for (let i = 6; i < 9; i++) {
   upgradelimits[i] = 1
 }
-for(let i = 8; i < 13;i++)
+for(let i = 8; i < 12;i++)
 {
   if(game.upgrades[i] == 1)
   upgradelimits[i+1] = 1
@@ -138,6 +138,7 @@ for(let i = 8; i < 13;i++)
   upgradelimits[i+1] = 0
 
 }
+
 upgradelimits[14] = 1
 upgradelimits[15] = 1
 upgradelimits[16] = 0
