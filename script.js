@@ -12,6 +12,7 @@ let basicparticlespeed = (Math.floor((windowx / 1920) * 2) + 1) / 10
 let particleperhit = 1
 let currenttab = "particles"
 let loading = 0
+let autobuyer1timer
 
 BigInt.prototype.toJSON = function () {
   return this.toString()
@@ -111,7 +112,7 @@ Number.prototype.formateNumber = function (max = 1e5) {
   return formatestring
 }
 function get_pSpeed() {
-  return basicparticlespeed * (game.upgrades[1] + 1)
+  return (basicparticlespeed * (game.upgrades[1] + 1) + game.upgrades[14])
 }
 
 Decimal.prototype.formateNumber = function (max = 5, r = 1) {
@@ -119,9 +120,6 @@ Decimal.prototype.formateNumber = function (max = 5, r = 1) {
     formatestring = this.toExponential(1).replace("+", "")
   } else formatestring = this.toFixed(r, Decimal.ROUND_DOWN)
   return formatestring
-}
-function get_pSpeed() {
-  return basicparticlespeed * (game.upgrades[1] + 1)
 }
 function tick() {
   if (game.tickinterval != oldtick) {
@@ -158,7 +156,13 @@ function LOADING() {
   reveal()
   openTab("particles", 0)
   setInterval(reveal, 5000)
+  buildElementalParticlesSortingChances()
+  if(game.upgrades[15] == 1)
+  {
+  autobuyer1timer = setInterval(buymax,1000,"particles")
+  }
   loading = 1
+
 }
 
 function reveal() {
@@ -189,14 +193,37 @@ function reveal() {
 }
 
 function buymax(r) {
+  
   ifbough = false
-  for (let i = 0; i < upgrades; i++) {
+  for (let i = upgrades-1; i >= 0; i--) {
     if (costnames[i] == r) {
       do {
         ifbough = buyupgrade(i)
       } while (ifbough == true)
     }
   }
+}
+function temphideupgrades(r)
+{
+ let totalupgrades = 0
+  for(let i = 0;i < upgrades; i++)
+  {
+    if(game.upgrades[i]<upgradelimits[i])
+      {
+        if(costnames[i] == r)
+        {
+          totalupgrades++
+          if(totalupgrades > 6)
+          {
+            e["upgrade" + i].style.display = "none"
+          }
+          else
+          e["upgrade" + i].style.display = "block"
+        }
+      }
+  
+
+}
 }
 function openupgrades(r) {
   for (let i = 0; i < upgrades; i++)
@@ -205,6 +232,7 @@ function openupgrades(r) {
         e["upgrade" + i].style.display = "block"
       } else e["upgrade" + i].style.display = "none"
     }
+    temphideupgrades(r)
 }
 function openTab(r, n) {
   e.countername.innerHTML = counternames[n] + ": "
@@ -240,8 +268,15 @@ function getElementalParticleEffect(r) {
           .plus(eparticles[1].log(2))
           .toPower(eparticles[1].e + 1)
     case 2:
-      return Decimal(1).plus(eparticles[2].e / 50)
-    
+      return Decimal(1).plus(eparticles[2].log(10) / 50)
+    case 6:
+      return Decimal(eparticles[6].log(10))
+    case 7:
+      return Decimal(eparticles[7].log(10))
+    case 8:
+      return Decimal(1).plus(eparticles[8].log(10) / 50)
+   
+      
     default:
       return Decimal(0)
   }
@@ -249,17 +284,25 @@ function getElementalParticleEffect(r) {
 function clearEparticles() {
   for (let i = 0; i < eparticles.length; i++) eparticles[i] = Decimal(0)
 }
-let elementalParticlesChances = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-let elementalParticlesChances10 = [0, 4, 9, 10]
+let elementalParticlesRawChances =[4,8,2,4,8,2,4,8,2,5,4,3,0]
+let elementalParticlesChances = [0]//, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+let elementalParticlesChances10 = [0, 3, 8, 10]
+let elementalParticlesFullChance = 0
+function buildElementalParticlesSortingChances()
+{
+for(let i = 1; i <= elementalParticlesRawChances.length;i++)
+elementalParticlesChances[i] = elementalParticlesRawChances[i-1] + elementalParticlesChances[i-1]
+elementalParticlesFullChance = elementalParticlesChances[elementalParticlesChances.length-1]
+}
 function sortElementalParticles(r) {
   let random
 
   let allowedparticles = game.elementalparticles.toSD(2, Decimal.ROUND_DOWN)
 
   for (let i = 0; i < r; i++) {
-    random = Math.floor(Math.random() * 100)
-    console.log(allowedparticles.div(100).formateNumber())
-    for (let i = 0; i < 10; i++) {
+    random = Math.floor(Math.random() * elementalParticlesFullChance)
+   
+    for (let i = 0; i < 13; i++) {
       if (
         random >= elementalParticlesChances[i] &&
         random < elementalParticlesChances[i + 1]

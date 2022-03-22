@@ -26,7 +26,7 @@ function getPrestigeValue(r) {
   game.activeparticles = 1
   game.elementalprestiges += 1
   
-buymax("particles")
+//buymax("particles")
 openTab("particles",0)
 
 redraw()

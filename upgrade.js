@@ -17,9 +17,15 @@ function getCost(r) {
     case 7:
       return Decimal(5e15)
     case 8:
-      return Decimal(1e300)
+      return Decimal(75)
     case 9:
-      return Decimal(1e300)
+      return Decimal(2e6)
+    case 13:
+      return Decimal(10).mul(Decimal(1e3).toPower(game.upgrades[13]*2))
+    case 14: 
+    return Decimal(50000)
+    case 15:
+    return Decimal(1e6)
     default:
       return Decimal(1e300)
      
@@ -47,6 +53,9 @@ function buyupgrade(r) {
       case 12:
       reveal()
       break
+      case 15:
+        autobuyer1timer = setInterval(buymax,1000,"particles")
+      break
       default:
         break
     }
@@ -58,6 +67,7 @@ function buyupgrade(r) {
   e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r)
   if (game.upgrades[r] >= upgradelimits[r]) {
     e["upgrade" + r].style.display = "none"
-  } else e["upgrade" + r].style.display = "block"
+    temphideupgrades(currenttab)
+  }// else e["upgrade" + r].style.display = "block"
   return bupgrade
 }
