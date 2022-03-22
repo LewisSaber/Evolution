@@ -133,6 +133,7 @@ function tick() {
 
 
 function LOADING() {
+  loading = 0
 reset()
 
 load()

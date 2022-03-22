@@ -101,3 +101,7 @@ function buyupgrade(r) {
   }// else e["upgrade" + r].style.display = "block"
   return bupgrade
 }
+function updatePrice(r)
+{
+  e["cost" + r].innerText = getCost(r).formateNumber() + getCostName(r)
+}

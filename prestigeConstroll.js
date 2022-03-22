@@ -16,19 +16,27 @@ function getPrestigeValue(r) {
       if(game.power.e > 145)
       {
         game.elementalparticles = game.elementalparticles.add( getPrestigeValue("elementalparticles"))
-    for(let i = 0; i < upgrades; i++)
-  {
-      if(costnames[i] == "particles")
-      game.upgrades[i] = 0
-  }
+ 
   
   game.totalelementalparticles =game.totalelementalparticles.add( getPrestigeValue("elementalparticles"))
   game.power = Decimal(0)
   game.particles = Decimal(0)
   game.activeparticles = 1
   game.elementalprestiges += 1
+  for(let i = 0; i < upgrades; i++)
+  {
+      if(costnames[i] == "particles")
+      {
+       
+        game.upgrades[i] = 0
+        
+        
+      }
+     
+      
+  }
   
-//buymax("particles")
+buymax("particles")
 openTab("particles",0)
 
 redraw()
