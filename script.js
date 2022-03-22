@@ -272,7 +272,7 @@ function getElementalParticleEffect(r) {
     case 6:
       return Decimal(eparticles[6].log(10))
     case 7:
-      return Decimal(eparticles[7].log(10))
+      return Decimal(eparticles[7].plus(1).log(10).plus(1))
     case 8:
       return Decimal(1).plus(eparticles[8].log(10) / 50)
    
