@@ -35,8 +35,13 @@ let eparticledescription = [
   "to Elemental Particles Base Gain",
   "Leptons Effect",
   "All Previous Particles Effect",
-  " Elemental Particles Gain"
+  "Elemental Particles Gain"
 ]
+let milestonedescription = [
+  "Upgrade #8 is always saved, 4x Elemental Particles gain,<br> 4x Particles per sorting",
+]
+let milestonenames = ["protons"]
+let milestonecosts = ["1"]
 let upgrades = upgradedescription.length
 let costnames = [
   "particles",
@@ -62,7 +67,8 @@ let costnames = [
   "elementalparticles",
 ]
 
-let counternames = ["Primorial particles", "Elemental particles"]
+let counternames = ["Primorial particles", "Elemental particles","Protons","Protons"]
+let powercounternames = ["Power","Power","Neutrons","Protons prestiges"]
 let particlename = [
   "Up Quark",
   "Charm Quark",
@@ -108,7 +114,7 @@ let colors = [
   "#04dade",
   "#e32b6f",
 ]
-let prestigelist = { elementalparticles: true }
+let prestigelist = { elementalparticles: true, protons:true }
 
 let upgradelimits = []
 
@@ -187,6 +193,14 @@ for (let i = 0; i < 14; i++) {
     eparticledescription[i]
   e.elementalparticlesdiv.appendChild(tag)
 }
+for(let i = 0; i < milestonedescription.length;i++)
+{
+  tag = document.createElement("p")
+  tag.setAttribute("class", "milestone")
+  tag.setAttribute("id", "milestone" + i)
+  tag.innerHTML = milestonedescription[i] + "<br>"+milestonecosts[i]+ " " + getMilestoneName(i)
+  e.milestonesdiv.appendChild(tag)
+}
 
 allElements = document.querySelectorAll("*[id]")
 allIds = []
@@ -212,4 +226,15 @@ function getCostName(n) {
       costnames[n].slice(9)
     )
   else return " " + costnames[n].charAt(0).toUpperCase() + costnames[n].slice(1)
+}
+function getMilestoneName(n) {
+  if (milestonenames[n] == "protonprestiges")
+    return (
+      " " +
+      milestonenames[n].charAt(0).toUpperCase() +
+      milestonenames[n].substring(1, 5) +
+      " " +
+      milestonenames[n].slice(6)
+    )
+  else return " " + milestonenames[n].charAt(0).toUpperCase() + milestonenames[n].slice(1)
 }

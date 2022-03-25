@@ -32,8 +32,8 @@ if (result != null)
 {
   if (result.toLowerCase() == "yes") {
     reset()
-    tick()
     addarrays()
+  
     save()
     options()
     LOADING();

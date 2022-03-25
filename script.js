@@ -13,6 +13,7 @@ let particleperhit = 1
 let currenttab = "particles"
 let loading = 0
 let autobuyer1timer
+let previoustab = "particles"
 
 BigInt.prototype.toJSON = function () {
   return this.toString()
@@ -20,13 +21,12 @@ BigInt.prototype.toJSON = function () {
 
 Decimal.config({ precision: 8, rounding: 4 })
 
-function resetupgrades() {
-  for (let i = 0; i < upgrades; i++) game.upgrades[i] = 0
-}
+
 function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0
   for (let i = game.eparticles.length; i < 14; i++) game.eparticles[i] = "0"
   for (let i = eparticles.length; i < 14; i++) eparticles[i] = Decimal(0)
+  for (let i = game.milestones.length; i < milestonedescription.length;i++) game.milestones[i] = 0
 }
 function reset() {
   game = {
@@ -41,20 +41,24 @@ function reset() {
     elementalprestiges: 0,
     totalelementalparticles: Decimal(0),
     milestonetype0: 0,
+    protons: Decimal(0),
+    neutrons: Decimal(0),
+    protonprestiges: 0,
+    milestones: [],
+    totalprotons:0,
   }
-  resetupgrades()
   eparticles = []
 }
 
 function save() {
   for (let i = 0; i < eparticles.length; i++)
     game.eparticles[i] = eparticles[i].toString()
-  localStorage.setItem("theEvolutionSave", JSON.stringify(game))
+  localStorage.setItem("theEvolutionSave2", JSON.stringify(game))
 }
 
 function load() {
   reset()
-  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"))
+  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave2"))
   if (loadgame != null) {
     loadGame(loadgame)
   }
@@ -84,6 +88,29 @@ function loadGame(loadgame) {
       }
     }
   }
+}
+
+function exportGame() {
+
+  save()
+  navigator.clipboard.writeText(btoa(JSON.stringify(game))).then(function() {
+    alert("Copied to clipboard!")
+  }, function() {
+    alert("Error copying to clipboard, try again...")
+  });
+}
+
+function importGame() {
+  loadgame = JSON.parse(atob(prompt("Input your save here:")))
+  if (loadgame && loadgame != null && loadgame != "") {
+    reset()
+    loadGame(loadgame)
+    save()
+  }
+  else {
+    alert("Invalid input.")
+  }
+  window.location.reload();
 }
 
 BigInt.prototype.formateNumber = function (max = 5) {
@@ -125,8 +152,8 @@ function tick() {
   updateCounterValue()
   if (prestigelist[currenttab]) updatePrestigeButton(currenttab)
   updateParticlesValue()
-
-  e.powervalue.innerText = game.power.formateNumber()
+  updatePowerCounterValue()
+  completemilestone()
 }
 
 function LOADING() {
@@ -170,15 +197,22 @@ function LOADING() {
   if (game.upgrades[15] == 1) {
     autobuyer1timer = setInterval(buymax, 1000, "particles")
     upgradelimits[16] = 1
-  }
+    
   if (game.upgrades[16] == 1) {
+    clearInterval(autobuyer1timer)
     autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
     upgradelimits[20] = 1
   }
   if (game.upgrades[20] == 1) {
+    clearInterval(autobuyer1timer)
+
     autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
     //upgradelimits[16] = 1
   }
+
+  }
+  
+ 
 
   setInterval(save, 1000)
   ticktimer = setInterval(tick, game.tickinterval)
@@ -189,6 +223,7 @@ function LOADING() {
 function reveal() {
   if (game.power.e > 145 || game.elementalprestiges > 0) {
     e.buyMax.style.display = "block"
+    e.particlesTabsButton.style.display = "block"
     e.elementalTabsButton.style.display = "block"
   }
   if (game.upgrades[8] > 0) {
@@ -214,6 +249,10 @@ function reveal() {
   if (game.upgrades[19] > 0) {
     e.eparticle13.style.display = "block"
   }
+  if (game.elementalparticles.e > 66 || game.protonprestiges > 0) {
+    e.protonTabsButton.style.display = "block"
+  }
+
   if (game.elementalparticles.e > 1) {
     upgradelimits[18] = 100
   }
@@ -252,20 +291,42 @@ function openupgrades(r) {
   temphideupgrades(r)
 }
 function openTab(r, n) {
-  e.countername.innerHTML = counternames[n] + ": "
+  e.countername.innerText = counternames[n] + ": "
+  e.powername.innerHTML = powercounternames[n] + ": "
   e[currenttab + "div"].style.display = "none"
   e[r + "div"].style.display = "block"
+  previoustab = currenttab
   currenttab = r
   updateCounterValue()
+  updatePowerCounterValue()
   openupgrades(r)
-  e.powervalue.innerText = game.power.formateNumber()
+ if(currenttab == "milestones")
+ {
+ openmilestonestype1(previoustab)
+ }
   if (prestigelist[r]) updatePrestigeButton(r)
   updateParticlesValue()
   milestonetype0controll()
 }
 function updateCounterValue() {
+  if(currenttab == "milestones")
+  e.countervalue.innerText = game.protons.formateNumber()
+  else
   e.countervalue.innerText = game[currenttab].formateNumber()
 }
+function updatePowerCounterValue()
+{
+ 
+  if(currenttab == "protons")
+  e.powervalue.innerText = game.neutrons.formateNumber()
+  else
+  if(currenttab == "milestones" && previoustab == "protons")
+  e.powervalue.innerText = game.protonprestiges.formateNumber()
+  else
+  e.powervalue.innerText = game.power.formateNumber()
+
+}
+
 function updateParticlesValue() {
   for (let i = 0; i < 14; i++) {
     e["eparticlecontainer" + i].innerText = eparticles[i].formateNumber()
@@ -366,6 +427,30 @@ function getElementalParticleEffect(r) {
 }
 function clearEparticles() {
   for (let i = 0; i < eparticles.length; i++) eparticles[i] = Decimal(0)
+  if (game.upgrades[8] == 0) {
+    e.eparticle6.style.display = "none"
+    e.eparticle7.style.display = "none"
+    e.eparticle8.style.display = "none"
+  }
+  if (game.upgrades[9] == 0) {
+    e.eparticle3.style.display = "none"
+    e.eparticle4.style.display = "none"
+    e.eparticle5.style.display = "none"
+  }
+  if (game.upgrades[10] == 0) {
+    e.eparticle9.style.display = "none"
+  }
+  if (game.upgrades[11] == 0) {
+    e.eparticle10.style.display = "none"
+    e.eparticle11.style.display = "none"
+  }
+  if (game.upgrades[12] == 0) {
+    e.eparticle12.style.display = "none"
+  }
+  if (game.upgrades[19] == 0) {
+    e.eparticle13.style.display = "none"
+  }
+
 }
 let elementalParticlesRawChances = [4, 8, 2, 4, 8, 2, 4, 8, 2, 5, 4, 3, 1, 1]
 let elementalParticlesChances = [0] //, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -378,141 +463,7 @@ function buildElementalParticlesSortingChances() {
   elementalParticlesFullChance =
     elementalParticlesChances[elementalParticlesChances.length - 1]
 }
-function sortElementalParticles(r) {
-  let random
-  let multiplicator = getElementalParticleEffect(9)
-  let allowedparticles = game.elementalparticles.toSD(2, Decimal.ROUND_DOWN)
 
-  for (let i = 0; i < r; i++) {
-    random = Math.floor(Math.random() * elementalParticlesFullChance)
-
-    for (let i = 0; i < 14; i++) {
-      if (
-        random >= elementalParticlesChances[i] &&
-        random < elementalParticlesChances[i + 1]
-      ) {
-        if (i < 3)
-          eparticles[i] = eparticles[i].add(
-            allowedparticles.div(100).mul(multiplicator)
-          )
-        if (i >= 3 && i <= 5)
-          if (game.upgrades[9] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[1] = eparticles[1].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-        if (i >= 6 && i <= 8)
-          if (game.upgrades[8] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[2] = eparticles[2].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-        if (i == 9)
-          if (game.upgrades[10] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[0] = eparticles[0].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-        if (i >= 10 && i <= 11)
-          if (game.upgrades[11] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[0] = eparticles[0].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-        if (i == 12)
-          if (game.upgrades[12] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[0] = eparticles[0].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-        if (i == 13)
-          if (game.upgrades[19] > 0)
-            eparticles[i] = eparticles[i].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-          else
-            eparticles[0] = eparticles[0].add(
-              allowedparticles.div(100).mul(multiplicator)
-            )
-      }
-    }
-  }
-  game.elementalparticles = game.elementalparticles.minus(allowedparticles)
-}
-
-function sortElementalParticles10() {
-  let random
-  // let allowedparticles = game.elementalparticles.toSD(1,Decimal.ROUND_DOWN)
-  let allowedparticles = game.elementalparticles.toFixed(0)
-  for (let i = 0; i < allowedparticles; i++) {
-    random = Math.floor(Math.random() * 10)
-    for (let j = 0; j < 3; j++) {
-      if (
-        random >= elementalParticlesChances10[j] &&
-        random < elementalParticlesChances10[j + 1]
-      )
-        if (j == 2) {
-          if (eparticles[0].gte(10) || eparticles[1].gte(10))
-            eparticles[j] = eparticles[j].plus(1)
-          else eparticles[0] = eparticles[0].plus(1)
-        } else eparticles[j] = eparticles[j].plus(1)
-    }
-  }
-  game.elementalparticles = game.elementalparticles.sub(allowedparticles)
-}
-
-function sortElementalParticles100() {
-  let random
-  let allowedparticles = game.elementalparticles.toSD(1, Decimal.ROUND_DOWN)
-
-  for (let j = 0; j < 10; j++) {
-    random = Math.floor(Math.random() * 100)
-    for (let i = 0; i < 10; i++) {
-      if (
-        random >= elementalParticlesChances[i] &&
-        random < elementalParticlesChances[i + 1]
-      ) {
-        if (i < 3) eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-        if (i >= 3 && i <= 5)
-          if (game.upgrades[9] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-          else eparticles[1] = eparticles[1].add(allowedparticles.div(10))
-        if (i >= 6 && i <= 8)
-          if (game.upgrades[8] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-          else eparticles[2] = eparticles[2].add(allowedparticles.div(10))
-        if (i == 9)
-          if (game.upgrades[10] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(10))
-        if (i >= 10 && i <= 11)
-          if (game.upgrades[11] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(10))
-        if (i == 12)
-          if (game.upgrades[12] > 0)
-            eparticles[i] = eparticles[i].add(allowedparticles.div(10))
-          else eparticles[0] = eparticles[0].add(allowedparticles.div(10))
-      }
-    }
-  }
-  game.elementalparticles = game.elementalparticles.sub(allowedparticles)
-}
 function sortEparticles(r) {
   if (game.elementalparticles.e < 4) {
     if (game.elementalparticles.gte(100)) sortElementalParticles(r)
@@ -532,7 +483,61 @@ function milestonetype0controll() {
   } else e.milestonetype0holder0.innerText = ""
   if (currenttab == "elementalparticles")
     if (game.milestonetype0 == 1) {
-      e.milestonetype0holder1.innerText = " / 2e67"
+      e.milestonetype0holder1.innerText = " / 1e67"
     } else e.milestonetype0holder1.innerText = ""
   else e.milestonetype0holder1.innerText = ""
 }
+function milestonestabopen()
+{
+if(currenttab == "protons")
+{
+e.protonsdiv.style.display = "none"
+openTab("milestones",3)
+openmilestones(previoustab)
+}
+else
+alert("Nope")
+
+
+}
+function openmilestonestype1(r)
+{
+for(let i = 0; i < game.milestones.length;i++)
+{
+if(milestonenames[i] ==r)
+{
+  e["milestone"+i].style.display = "block"
+  if(game.milestones[i] == 1){
+    e["milestone"+i].style.backgroundColor = "rgb(49, 202, 49)"
+    e["milestone"+i].style.borderColor = "green"
+  }
+  else{
+    e["milestone"+i].style.backgroundColor = "rgb(151, 152, 153)"
+    e["milestone"+i].style.borderColor = "gray"
+  }
+}
+else
+e["milestone"+i].style.display = "none"
+}
+}
+function completemilestone()
+{
+  for(let i = 0; i < game.milestones.length;i++)
+{
+  if(game[milestonenames[i]].gte( Decimal(milestonecosts[i])) && game.milestones[i] == 0){ game.milestones[i] = 1
+  if(loading == 1)
+  notification("New "+ milestonenames[i]+" milestone reached")
+  }
+}
+}
+function notification(r)
+{
+  e.notification.innerText = r
+  e.notification.style.display = "block"
+  setTimeout(removenotification,2000)
+}
+function removenotification()
+{
+  e.notification.style.display = "none"
+}
+

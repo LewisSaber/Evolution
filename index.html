@@ -7,23 +7,56 @@
     <title>Evolution</title>
   </head>
   <body id="body">
-    <div id="counter"><p id="countername">Primorial particles: </p> 
-      <p id="countervalue">0</p><p id="milestonetype0holder1" class="milestoneholder"></p>
+    <p id="notification"></p>
+    <div id="counter">
+      <p id="countername">Primorial particles:</p>
+      <p id="countervalue">0</p>
+      <p id="milestonetype0holder1" class="milestoneholder"></p>
     </div>
     <div id="powerdiv">
-      Power :
+      <p id="powername">Power :</p>
       <p id="powervalue">0</p>
       <p id="milestonetype0holder0" class="milestoneholder"></p>
     </div>
     <button id="options" onclick="options()"></button>
-    <div id="particlesdiv" ></div>
-    <div id="elementalparticlesdiv" ><button id="elementalprestige" class="prestigeButton" onclick="doElementalPrestige()">Prestige : +<p id="prestigevalue">0</p> Elemental particles</button><button id="particlesort" onclick="sortEparticles(100)">Sort Elemental Particles</button></div>
-    <div id="upgradesdiv"><button id="buyMax" onclick="buymax(currenttab)" class="upgrade">Buy Max</button></div>
+    <button id="milestones" onclick="openTab('milestones',3)"></button>
+    <div id="particlesdiv"></div>
+    <div id="elementalparticlesdiv">
+      <button id="elementalprestige" class="prestigeButton" onclick="doElementalPrestige()">  Prestige : +  <p id="prestigevalueelementalparticles">0</p>  Elemental particles</button><button id="particlesort" onclick="sortEparticles(100)">
+        Sort Elemental Particles
+      </button>
+    </div>
+    <div id="protonsdiv">
+      <button id="protonprestige" class="prestigeButton" onclick="doProtonPrestige()">Prestige : + <p id="prestigevalueprotons">0 Protons</button></div>
+    <div id="milestonesdiv"></div>
+    <div id="upgradesdiv">
+      <button id="buyMax" onclick="buymax(currenttab)" class="upgrade">
+        Buy Max
+      </button>
+    </div>
     <div id="optionsdiv">
-    <button id="hardreset" onclick="HardReset()">HARD RESET</button><button id="fancymode" onclick="fancymode()"> Smooth Particles:<br>ON</button>
+      <button id="hardreset" onclick="HardReset()">HARD RESET</button
+      ><button id="fancymode" onclick="fancymode()">
+        Smooth Particles:<br />ON
+      </button>
+      <button id="exportgame" onclick="exportGame()">Export</button>
+      <button id="importgame" onclick="importGame()">Import</button>
     </div>
 
-<div id="tabsdiv"><button class="tabsbutton" onclick="openTab('particles',0)">Primorial<br>Particles</button><button class="tabsbutton" onclick="openTab('elementalparticles',1)" id="elementalTabsButton">Elemental<br>Particles</button></div>
+    <div id="tabsdiv">
+      <button class="tabsbutton" onclick="openTab('particles',0)" id="particlesTabsButton">
+        Primorial<br />Particles</button
+      ><button
+        class="tabsbutton"
+        onclick="openTab('elementalparticles',1)"
+        id="elementalTabsButton"
+      >
+        Elemental<br />Particles
+      </button>
+      <button class="tabsbutton" onclick="openTab('protons',2)" id="protonTabsButton">
+        Protons</button
+      >
+    </div>
     <script src="decimal.js-master/decimal.js"></script>
     <script src="processingids.js"></script>
     <script src="script.js"></script>

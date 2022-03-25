@@ -67,7 +67,8 @@ function hit(n = 1) {
 
   if (currenttab == "particles")
     e.countervalue.innerText = game.particles.formateNumber()
-  e.powervalue.innerText = game.power.formateNumber()
+  updatePowerCounterValue()
+  
 }
 
 function addparticle(n) {
@@ -107,4 +108,140 @@ function particlemove() {
     particlesdrawn[i].style.left = vector[i].xc + "px"
     particlesdrawn[i].style.top = vector[i].yc + "px"
   }
+}
+function sortElementalParticles(r) {
+  let random
+  let multiplicator = getElementalParticleEffect(9).mul(Decimal(4).toPower(game.milestones[0]))
+  let allowedparticles = game.elementalparticles.toSD(2, Decimal.ROUND_DOWN)
+
+  for (let i = 0; i < r; i++) {
+    random = Math.floor(Math.random() * elementalParticlesFullChance)
+
+    for (let i = 0; i < 14; i++) {
+      if (
+        random >= elementalParticlesChances[i] &&
+        random < elementalParticlesChances[i + 1]
+      ) {
+        if (i < 3)
+          eparticles[i] = eparticles[i].add(
+            allowedparticles.div(100).mul(multiplicator)
+          )
+        if (i >= 3 && i <= 5)
+          if (game.upgrades[9] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[1] = eparticles[1].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i >= 6 && i <= 8)
+          if (game.upgrades[8] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[2] = eparticles[2].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i == 9)
+          if (game.upgrades[10] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i >= 10 && i <= 11)
+          if (game.upgrades[11] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i == 12)
+          if (game.upgrades[12] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+        if (i == 13)
+          if (game.upgrades[19] > 0)
+            eparticles[i] = eparticles[i].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+          else
+            eparticles[0] = eparticles[0].add(
+              allowedparticles.div(100).mul(multiplicator)
+            )
+      }
+    }
+  }
+  game.elementalparticles = game.elementalparticles.minus(allowedparticles)
+}
+
+function sortElementalParticles10() {
+  let random
+  // let allowedparticles = game.elementalparticles.toSD(1,Decimal.ROUND_DOWN)
+  let multiplicator = getElementalParticleEffect(9).mul(Decimal(4).toPower(game.milestones[0]))
+  let allowedparticles = game.elementalparticles.toFixed(0)
+  for (let i = 0; i < allowedparticles; i++) {
+    random = Math.floor(Math.random() * 10)
+    for (let j = 0; j < 3; j++) {
+      if (
+        random >= elementalParticlesChances10[j] &&
+        random < elementalParticlesChances10[j + 1]
+      )
+        if (j == 2) {
+          if (eparticles[0].gte(10) || eparticles[1].gte(10))
+            eparticles[j] = eparticles[j].plus(1).mul(multiplicator)
+          else eparticles[0] = eparticles[0].plus(1).mul(multiplicator)
+        } else eparticles[j] = eparticles[j].plus(1).mul(multiplicator)
+    }
+  }
+  game.elementalparticles = game.elementalparticles.sub(allowedparticles)
+}
+
+function sortElementalParticles100() {
+  let random
+  let allowedparticles = game.elementalparticles.toSD(1, Decimal.ROUND_DOWN)
+  let multiplicator = getElementalParticleEffect(9).mul(Decimal(4).toPower(game.milestones[0]))
+  for (let j = 0; j < 10; j++) {
+    random = Math.floor(Math.random() * 100)
+    for (let i = 0; i < 10; i++) {
+      if (
+        random >= elementalParticlesChances[i] &&
+        random < elementalParticlesChances[i + 1]
+      ) {
+        if (i < 3) eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+        if (i >= 3 && i <= 5)
+          if (game.upgrades[9] > 0)
+            eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+          else eparticles[1] = eparticles[1].add(allowedparticles.div(10)).mul(multiplicator)
+        if (i >= 6 && i <= 8)
+          if (game.upgrades[8] > 0)
+            eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+          else eparticles[2] = eparticles[2].add(allowedparticles.div(10)).mul(multiplicator)
+        if (i == 9)
+          if (game.upgrades[10] > 0)
+            eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(10)).mul(multiplicator)
+        if (i >= 10 && i <= 11)
+          if (game.upgrades[11] > 0)
+            eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(10)).mul(multiplicator)
+        if (i == 12)
+          if (game.upgrades[12] > 0)
+            eparticles[i] = eparticles[i].add(allowedparticles.div(10)).mul(multiplicator)
+          else eparticles[0] = eparticles[0].add(allowedparticles.div(10)).mul(multiplicator)
+      }
+    }
+  }
+  game.elementalparticles = game.elementalparticles.sub(allowedparticles)
 }
