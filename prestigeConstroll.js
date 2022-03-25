@@ -25,7 +25,7 @@ function updatePrestigeButton(r) {
   e["prestigevalue" + r].innerText = getPrestigeValue(r).formateNumber()
 }
 function doProtonPrestige() {}
-function doElementalPrestige(r) {
+function doElementalPrestige(r = 0) {
   if (game.power.e > 145 || r == 1) {
     game.elementalparticles = game.elementalparticles.add(
       getPrestigeValue("elementalparticles")
@@ -93,5 +93,6 @@ function doProtonPrestige() {
     e.eparticle13.style.display = "none"
   }
   doElementalPrestige(1)
+  game.elementalparticles = Decimal(0)
 }
 }
