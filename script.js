@@ -53,12 +53,12 @@ function reset() {
 function save() {
   for (let i = 0; i < eparticles.length; i++)
     game.eparticles[i] = eparticles[i].toString()
-  localStorage.setItem("theEvolutionSave2", JSON.stringify(game))
+  localStorage.setItem("theEvolutionSave", JSON.stringify(game))
 }
 
 function load() {
   reset()
-  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave2"))
+  let loadgame = JSON.parse(localStorage.getItem("theEvolutionSave"))
   if (loadgame != null) {
     loadGame(loadgame)
   }
