@@ -556,7 +556,7 @@ function getAtomEffect(r)
 {
 switch (r) {
   case 0:
-    if (eparticles[0].equals(0)) return Decimal(1)
+    if (atoms[0].equals(0)) return Decimal(1)
     else
       return Decimal(2)
         .plus(atoms[0].log(2))
