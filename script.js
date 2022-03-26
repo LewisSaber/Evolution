@@ -547,8 +547,24 @@ function removenotification() {
 function updateAtomsValue(){
   for (let i = 0; i < atomnames.length; i++) {
     e["atomcontainer" + i].innerText = atoms[i].formateNumber()
-    e["atommultiplier" + i].innerText = getElementalParticleEffect(
+    e["atommultiplier" + i].innerText = getAtomEffect(
       i
     ).formateNumber(5, 2)
   }
+}
+function getAtomEffect(r)
+{
+switch (r) {
+  case 0:
+    if (eparticles[0].equals(0)) return Decimal(1)
+    else
+      return Decimal(2)
+        .plus(atoms[0].log(2))
+        .toPower(atoms[0].e + 1)
+       
+
+  default:
+    return Decimal(0)
+}
+
 }

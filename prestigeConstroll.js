@@ -17,7 +17,7 @@ function getPrestigeValue(r) {
           .mul(Decimal(4).toPower(game.milestones[0]))
       else return Decimal(0)
     case "protons":
-      return 1
+      return Decimal(1).mul(getAtomEffect(0))
   }
 }
 
