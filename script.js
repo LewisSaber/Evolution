@@ -21,12 +21,20 @@ BigInt.prototype.toJSON = function () {
 
 Decimal.config({ precision: 8, rounding: 4 })
 
-
 function addarrays() {
   for (let i = game.upgrades.length; i < upgrades; i++) game.upgrades[i] = 0
   for (let i = game.eparticles.length; i < 14; i++) game.eparticles[i] = "0"
+  for (let i = game.atoms.length; i < atomnames.length; i++) game.atoms[i] = "0"
+  for (let i = atoms.length; i < atomnames,length; i++) atoms[i] = Decimal(0)
   for (let i = eparticles.length; i < 14; i++) eparticles[i] = Decimal(0)
-  for (let i = game.milestones.length; i < milestonedescription.length;i++) game.milestones[i] = 0
+  for (let i = game.milestones.length; i < milestonedescription.length; i++)
+    game.milestones[i] = 0
+  for (let i = 0; i < game.eparticles.length; i++) {
+    eparticles[i] = Decimal(game.eparticles[i])
+  }
+  for (let i = 0; i < game.atoms.length; i++) {
+    atoms[i] = Decimal(game.atoms[i])
+  }
 }
 function reset() {
   game = {
@@ -43,16 +51,21 @@ function reset() {
     milestonetype0: 0,
     protons: Decimal(0),
     neutrons: Decimal(0),
-    protonprestiges: 0,
+    protonprestiges: Decimal(0),
     milestones: [],
-    totalprotons:0,
+    totalprotons: 0,
+    addedprotons: 0,
+    addedneutrons: 0,
+    atoms: [],
   }
   eparticles = []
+  atoms = []
 }
 
 function save() {
   for (let i = 0; i < eparticles.length; i++)
     game.eparticles[i] = eparticles[i].toString()
+  for (let i = 0; i < atoms.length; i++) game.atoms[i] = atoms[i].toString()
   localStorage.setItem("theEvolutionSave", JSON.stringify(game))
 }
 
@@ -91,13 +104,15 @@ function loadGame(loadgame) {
 }
 
 function exportGame() {
-
   save()
-  navigator.clipboard.writeText(btoa(JSON.stringify(game))).then(function() {
-    alert("Copied to clipboard!")
-  }, function() {
-    alert("Error copying to clipboard, try again...")
-  });
+  navigator.clipboard.writeText(btoa(JSON.stringify(game))).then(
+    function () {
+      alert("Copied to clipboard!")
+    },
+    function () {
+      alert("Error copying to clipboard, try again...")
+    }
+  )
 }
 
 function importGame() {
@@ -106,11 +121,10 @@ function importGame() {
     reset()
     loadGame(loadgame)
     save()
-  }
-  else {
+  } else {
     alert("Invalid input.")
   }
-  window.location.reload();
+  window.location.reload()
 }
 
 BigInt.prototype.formateNumber = function (max = 5) {
@@ -152,8 +166,13 @@ function tick() {
   updateCounterValue()
   if (prestigelist[currenttab]) updatePrestigeButton(currenttab)
   updateParticlesValue()
+  updateAtomsValue()
   updatePowerCounterValue()
   completemilestone()
+  if(game.milestones[3] == 1)
+  game.elementalparticles = game.elementalparticles.plus(getPrestigeValue("elementalparticles").mul(0.05))
+  if(game.milestones[5] == 1)
+  game.protons = game.protons.plus(getPrestigeValue("protons"))
 }
 
 function LOADING() {
@@ -162,9 +181,6 @@ function LOADING() {
 
   load()
   addarrays()
-  for (let i = 0; i < game.eparticles.length; i++) {
-    eparticles[i] = Decimal(game.eparticles[i])
-  }
 
   loadIDS()
 
@@ -193,30 +209,39 @@ function LOADING() {
   reveal()
   openTab("particles", 0)
   setInterval(reveal, 5000)
+ 
   buildElementalParticlesSortingChances()
   if (game.upgrades[15] == 1) {
     autobuyer1timer = setInterval(buymax, 1000, "particles")
     upgradelimits[16] = 1
-    
-  if (game.upgrades[16] == 1) {
-    clearInterval(autobuyer1timer)
-    autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
-    upgradelimits[20] = 1
-  }
-  if (game.upgrades[20] == 1) {
-    clearInterval(autobuyer1timer)
 
-    autobuyer1timer = setInterval(buymax,1000/game.upgrades[16]+1,"particles")
-    //upgradelimits[16] = 1
-  }
+    if (game.upgrades[16] == 1) {
+      clearInterval(autobuyer1timer)
+      autobuyer1timer = setInterval(
+        buymax,
+        1000 / game.upgrades[16] + 1,
+        "particles"
+      )
+      upgradelimits[20] = 1
+    }
+    if (game.upgrades[20] == 1) {
+      clearInterval(autobuyer1timer)
+
+      autobuyer1timer = setInterval(
+        buymax,
+        1000 / game.upgrades[16] + 1,
+        "particles"
+      )
+      //upgradelimits[16] = 1
+    }
 
   }
-  
- 
 
   setInterval(save, 1000)
   ticktimer = setInterval(tick, game.tickinterval)
-
+  loadAtomsDisplay()
+  if(game.milestones[4] == 1)
+  sortingtimer = setInterval(sortEparticles,1000,100)
   loading = 1
 }
 
@@ -300,31 +325,26 @@ function openTab(r, n) {
   updateCounterValue()
   updatePowerCounterValue()
   openupgrades(r)
- if(currenttab == "milestones")
- {
- openmilestonestype1(previoustab)
- }
+  if (currenttab == "milestones") {
+    if (previoustab == "protons")
+      openmilestonestype1(previoustab, "protonprestiges")
+    else openmilestonestype1(previoustab)
+  }
   if (prestigelist[r]) updatePrestigeButton(r)
   updateParticlesValue()
   milestonetype0controll()
 }
 function updateCounterValue() {
-  if(currenttab == "milestones")
-  e.countervalue.innerText = game.protons.formateNumber()
-  else
-  e.countervalue.innerText = game[currenttab].formateNumber()
+  if (currenttab == "milestones")
+    e.countervalue.innerText = game.protons.formateNumber()
+  else e.countervalue.innerText = game[currenttab].formateNumber()
 }
-function updatePowerCounterValue()
-{
- 
-  if(currenttab == "protons")
-  e.powervalue.innerText = game.neutrons.formateNumber()
-  else
-  if(currenttab == "milestones" && previoustab == "protons")
-  e.powervalue.innerText = game.protonprestiges.formateNumber()
-  else
-  e.powervalue.innerText = game.power.formateNumber()
-
+function updatePowerCounterValue() {
+  if (currenttab == "protons")
+    e.powervalue.innerText = game.neutrons.formateNumber()
+  else if (currenttab == "milestones" && previoustab == "protons")
+    e.powervalue.innerText = game.protonprestiges.formateNumber()
+  else e.powervalue.innerText = game.power.formateNumber()
 }
 
 function updateParticlesValue() {
@@ -450,7 +470,6 @@ function clearEparticles() {
   if (game.upgrades[19] == 0) {
     e.eparticle13.style.display = "none"
   }
-
 }
 let elementalParticlesRawChances = [4, 8, 2, 4, 8, 2, 4, 8, 2, 5, 4, 3, 1, 1]
 let elementalParticlesChances = [0] //, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -487,57 +506,49 @@ function milestonetype0controll() {
     } else e.milestonetype0holder1.innerText = ""
   else e.milestonetype0holder1.innerText = ""
 }
-function milestonestabopen()
-{
-if(currenttab == "protons")
-{
-e.protonsdiv.style.display = "none"
-openTab("milestones",3)
-openmilestones(previoustab)
-}
-else
-alert("Nope")
 
-
-}
-function openmilestonestype1(r)
-{
-for(let i = 0; i < game.milestones.length;i++)
-{
-if(milestonenames[i] ==r)
-{
-  e["milestone"+i].style.display = "block"
-  if(game.milestones[i] == 1){
-    e["milestone"+i].style.backgroundColor = "rgb(49, 202, 49)"
-    e["milestone"+i].style.borderColor = "green"
-  }
-  else{
-    e["milestone"+i].style.backgroundColor = "rgb(151, 152, 153)"
-    e["milestone"+i].style.borderColor = "gray"
+function openmilestonestype1(r, n = "none") {
+  for (let i = 0; i < game.milestones.length; i++) {
+    if (milestonenames[i] == r || milestonenames[i] == n) {
+      e["milestone" + i].style.display = "block"
+      if (game.milestones[i] == 1) {
+        e["milestone" + i].style.backgroundColor = "rgb(49, 202, 49)"
+        e["milestone" + i].style.borderColor = "green"
+      } else {
+        e["milestone" + i].style.backgroundColor = "rgb(151, 152, 153)"
+        e["milestone" + i].style.borderColor = "gray"
+      }
+    } else e["milestone" + i].style.display = "none"
   }
 }
-else
-e["milestone"+i].style.display = "none"
-}
-}
-function completemilestone()
-{
-  for(let i = 0; i < game.milestones.length;i++)
-{
-  if(game[milestonenames[i]].gte( Decimal(milestonecosts[i])) && game.milestones[i] == 0){ game.milestones[i] = 1
-  if(loading == 1)
-  notification("New "+ milestonenames[i]+" milestone reached")
+let sortingtimer
+function completemilestone() {
+  for (let i = 0; i < game.milestones.length; i++) {
+    if (
+     Decimal( game[milestonenames[i]]).gte(Decimal(milestonecosts[i])) &&
+      game.milestones[i] == 0
+    ) {
+      game.milestones[i] = 1
+      if(i == 4)
+      sortingtimer = setInterval(sortEparticles,1000,100)
+      if (loading == 1)
+        notification("New " + getMilestoneName(i) + " milestone reached")
+    }
   }
 }
-}
-function notification(r)
-{
+function notification(r) {
   e.notification.innerText = r
   e.notification.style.display = "block"
-  setTimeout(removenotification,2000)
+  setTimeout(removenotification, 2000)
 }
-function removenotification()
-{
+function removenotification() {
   e.notification.style.display = "none"
 }
-
+function updateAtomsValue(){
+  for (let i = 0; i < atomnames.length; i++) {
+    e["atomcontainer" + i].innerText = atoms[i].formateNumber()
+    e["atommultiplier" + i].innerText = getElementalParticleEffect(
+      i
+    ).formateNumber(5, 2)
+  }
+}

@@ -38,22 +38,27 @@ function doElementalPrestige(r = 0) {
     game.particles = Decimal(0)
     game.activeparticles = 1
     game.elementalprestiges += 1
+    if(game.milestones[2] == 0)
+    {
     for (let i = 0; i < upgrades; i++) {
+
       if (costnames[i] == "particles") {
         if (i == 7 && game.milestones[0] == 1) {
           game.upgrades[i] = 1
         } else game.upgrades[i] = 0
       }
     }
-
     buymax("particles")
     openTab("particles", 0)
+    redraw()
+  }
+  
     if (game.milestonetype0 == 0) {
       game.milestonetype0 = 1
 
       milestonetype0controll()
     }
-    redraw()
+    
   }
 }
 function doProtonPrestige() {
@@ -62,13 +67,19 @@ function doProtonPrestige() {
   game.protonprestiges += 1
   game.protons = game.protons.plus(getPrestigeValue("protons"))
   completemilestone()
+  if(game.milestones[5]==0)
+  {
+
   clearEparticles()
-  game.elementalparticles = Decimal(0)
   for (let i = 0; i < upgrades; i++) {
     if (costnames[i] == "elementalparticles") {
+      if(i == 8 && game.milestones[1] == 1)
+      game.upgrades[i] = 1
+      else
       game.upgrades[i] = 0
     }
   }
+  clearInterval(autobuyer1timer)
   if (game.upgrades[8] == 0) {
     e.eparticle6.style.display = "none"
     e.eparticle7.style.display = "none"
@@ -92,7 +103,9 @@ function doProtonPrestige() {
   if (game.upgrades[19] == 0) {
     e.eparticle13.style.display = "none"
   }
+
   doElementalPrestige(1)
   game.elementalparticles = Decimal(0)
 }
+  }
 }

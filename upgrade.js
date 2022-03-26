@@ -59,6 +59,9 @@ function buyupgrade(r) {
     game.upgrades[r] += 1
     switch (r) {
       case 0:
+        if(game.milestones[1] == 1)
+        upgradelimits[0] = 0
+        else
         addparticle(1)
       
         break

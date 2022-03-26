@@ -38,10 +38,15 @@ let eparticledescription = [
   "Elemental Particles Gain"
 ]
 let milestonedescription = [
-  "Upgrade #8 is always saved, 4x Elemental Particles gain,<br> 4x Particles per sorting",
+  "#1 Upgrade #8 is always saved, 4x Elemental Particles gain,<br> 4x Particles per sorting",
+  "#2 Disable Upgrade #1, x50 primorial particles gain, Leptons are Always Unlocked",
+  "#3 Primorial Particles Upgrades are always saved , x4 Primorial Particles gain",
+  "#4 Gain 5% of Elemental Particles Per Second",
+  "#5 Sorting Particles is free, sort particles automaticly",
+  "#6 Proton Prestiges Dont reset anything, gain 100% of Protons Per Second",
 ]
-let milestonenames = ["protons"]
-let milestonecosts = ["1"]
+let milestonenames = ["protonprestiges","protonprestiges","protonprestiges","protonprestiges","protonprestiges","protonprestiges"]
+let milestonecosts = ["1","2","3","5","7","10"]
 let upgrades = upgradedescription.length
 let costnames = [
   "particles",
@@ -115,9 +120,12 @@ let colors = [
   "#e32b6f",
 ]
 let prestigelist = { elementalparticles: true, protons:true }
-
+let atomcomponents = []
+let totalatomcomponents = 20
 let upgradelimits = []
-
+let atomnames = ["Hydrogen","Deuterium","Tritium","Helium-3","Helium-4"]
+let atomsymbols = ["x "," "," "," "," "]
+let atomdescription = ["Protons Gain","Soon","Soon","Soon","Soon"]
 let e = {}
 
 
@@ -139,6 +147,8 @@ upgradelimits[2] = 20000
 upgradelimits[3] = 2000
 upgradelimits[4] = 2000
 upgradelimits[5] = 6
+if(game.milestones[1] == 1)
+upgradelimits[0] = 0
 
 for (let i = 6; i < 9; i++) {
   upgradelimits[i] = 1
@@ -193,6 +203,23 @@ for (let i = 0; i < 14; i++) {
     eparticledescription[i]
   e.elementalparticlesdiv.appendChild(tag)
 }
+for (let i = 0; i < atomnames.length; i++) {
+  tag = document.createElement("p")
+  tag.setAttribute("class", "atom")
+  tag.setAttribute("id", "atom" + i)
+  tag.innerHTML =
+    atomnames[i] +
+    '<p id="atomcontainer' +
+    i +
+    '" class="atomcontainer"> 0 </p>  ' +
+    atomsymbols[i] +
+    '<p id="atommultiplier' +
+    i +
+    '" class="atomdescription"> 0 </p> ' +
+    " " +
+    atomdescription[i]
+  e.atomsdiv.appendChild(tag)
+}
 for(let i = 0; i < milestonedescription.length;i++)
 {
   tag = document.createElement("p")
@@ -201,6 +228,17 @@ for(let i = 0; i < milestonedescription.length;i++)
   tag.innerHTML = milestonedescription[i] + "<br>"+milestonecosts[i]+ " " + getMilestoneName(i)
   e.milestonesdiv.appendChild(tag)
 }
+
+for(let i = 0 ; i < totalatomcomponents ; i++)
+{
+
+  tag = document.createElement("p")
+  tag.setAttribute("class", "atomcomponent")
+  tag.setAttribute("id", "atomcomponent" + i)
+  e.atomdisplay.appendChild(tag)
+  
+}
+
 
 allElements = document.querySelectorAll("*[id]")
 allIds = []
@@ -232,7 +270,7 @@ function getMilestoneName(n) {
     return (
       " " +
       milestonenames[n].charAt(0).toUpperCase() +
-      milestonenames[n].substring(1, 5) +
+      milestonenames[n].substring(1, 6) +
       " " +
       milestonenames[n].slice(6)
     )

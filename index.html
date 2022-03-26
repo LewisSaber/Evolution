@@ -20,6 +20,7 @@
     </div>
     <button id="options" onclick="options()"></button>
     <button id="milestones" onclick="openTab('milestones',3)"></button>
+    <button id="inventory" onclick="openInventory()"></button>
     <div id="particlesdiv"></div>
     <div id="elementalparticlesdiv">
       <button id="elementalprestige" class="prestigeButton" onclick="doElementalPrestige()">  Prestige : +  <p id="prestigevalueelementalparticles">0</p>  Elemental particles</button><button id="particlesort" onclick="sortEparticles(100)">
@@ -27,7 +28,14 @@
       </button>
     </div>
     <div id="protonsdiv">
-      <button id="protonprestige" class="prestigeButton" onclick="doProtonPrestige()">Prestige : + <p id="prestigevalueprotons">0 Protons</button></div>
+      <button id="protonprestige" class="prestigeButton" onclick="doProtonPrestige()">Prestige : + <p id="prestigevalueprotons">0 </p> Protons</button>
+        <div id="atomsdiv"></div>
+        <div id="atomdisplay"><button id="addneutron" onclick="addAtomComponent('neutron')"> Add Neutron</button>
+          <button id="addproton" onclick="addAtomComponent('proton')"> Add Proton</button>
+          <button id="makeAtom" onclick="makeAtom()">Make Atom</button>
+        </div>
+      </div>
+     
     <div id="milestonesdiv"></div>
     <div id="upgradesdiv">
       <button id="buyMax" onclick="buymax(currenttab)" class="upgrade">
@@ -63,6 +71,7 @@
     <script src="upgrade.js"></script>
     <script src="particlecontroll.js"></script>
     <script src="prestigeConstroll.js"></script>
+    <script src="atomparts.js"></script>
     <script src="options.js"></script>
   </body>
 </html>
