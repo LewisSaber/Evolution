@@ -197,10 +197,10 @@ function LOADING() {
 
   for (let i = 0; i < upgrades; i++) {
     buyupgrade(i)
-  }
+  
   if (game.upgrades[i] >= upgradelimits[i]) {
     e["upgrade" + i].style.display = "none"
-  }
+  }}
   if (game.fancymode == 1) {
     e.fancymode.innerHTML = " Smooth Particles:<br>OFF"
   } else {
